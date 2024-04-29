@@ -31,8 +31,8 @@ class Player:
             self.pos[1] = new_y
         
         # Apply gravity
-        if collisions["down"] == 0:
-            self.pos[1] -= 1
+        #if collisions["down"] == 0:
+            #self.pos[1] -= 1
         
 
     def render(self, surf):

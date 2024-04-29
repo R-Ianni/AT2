@@ -20,7 +20,7 @@ class Map:
             collision["down"] = 1
         if (pos[1] // 16 < 0) or map[pos[1] // 16] == 1:
             collision["up"] = 1
-        if ((pos[0] + size[0]) // 16 > len(map[0]) or map[]):
+        if ((pos[0] + size[0]) // 16 > len(map[0])):
             collision["right"] = 1
         if (pos[0] // 16 < 0):
             collision["left"] = 1
