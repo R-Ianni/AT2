@@ -1,94 +1,85 @@
+# menu.py
 import pygame
+import os
 import sys
-pygame.init()
+from character_select import CharacterSelect
+from settings import SettingsPage
 
-# Set up the buttons
-play_button = pygame.Rect(300, 200, 200, 50)
-settings_button = pygame.Rect(300, 300, 200, 50)
-exit_button = pygame.Rect(300, 400, 200, 50)
+class Menu:
+    def __init__(self):
+        # Initialise pygame
+        pygame.init()
 
-# Character select screen
-def character_select():
-    # Add your code here to implement the character select screen
-    print("Character select screen")
+        # Set up the window
+        self.window_width = 800
+        self.window_height = 600
+        self.window = pygame.display.set_mode((self.window_width, self.window_height))
+        pygame.display.set_caption("King's Quest")
 
-# Game loop
-while True:
-    # Handle events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_pos = pygame.mouse.get_pos()
-            if play_button.collidepoint(mouse_pos):
-                # Handle play button click
-                character_select()  # Open character select screen
-            if settings_button.collidepoint(mouse_pos):
-                # Handle settings button click
-                print("Settings button clicked")
-            if exit_button.collidepoint(mouse_pos):
-                # Handle exit button click
-                pygame.quit()
-                sys.exit()
-    # Set up the window
-    window_width = 800
-
-    # Rest of the code...
-
-    # Game loop
-    while True:
-        # Handle events
-        window_height = 600
-        window = pygame.display.set_mode((window_width, window_height))
-        pygame.display.set_caption("RPG Game")
-
-        # Set up the colors
-        background_color = (0, 0, 0)
-        button_color = (255, 255, 255)
+        # Set up button colours
+        self.button_background = (0, 0, 0)
+        self.button_text_colour = (255, 255, 255)
 
         # Set up the fonts
-        font = pygame.font.Font(None, 36)
+        self.font = pygame.font.Font(None, 36)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        # Set up main menu button sizes
+        self.button_width = 150
+        self.button_height = 50
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
+        # Arrange main menu buttons horizontally in the lower third
+        button_y = int(self.window_height * 0.75)
+        spacing = (self.window_width - (self.button_width * 3)) // 4
 
-                if play_button.collidepoint(mouse_pos):
-                    # Handle play button click
-                    print("Play button clicked")
+        self.play_button = pygame.Rect(spacing, button_y, self.button_width, self.button_height)
+        self.settings_button = pygame.Rect(spacing * 2 + self.button_width, button_y, self.button_width, self.button_height)
+        self.exit_button = pygame.Rect(spacing * 3 + self.button_width * 2, button_y, self.button_width, self.button_height)
 
-                if settings_button.collidepoint(mouse_pos):
-                    # Handle settings button click
-                    print("Settings button clicked")
+        # Load the main menu background image
+        asset_dir = "AT2/assets"
+        try:
+            self.background_image = pygame.image.load(os.path.join(asset_dir, "main_menu_background.png"))
+            self.background_image = pygame.transform.smoothscale(self.background_image, (self.window_width, self.window_height))
+        except Exception as e:
+            print(f"Error loading main menu background image: {e}")
+            sys.exit(1)
 
-                if exit_button.collidepoint(mouse_pos):
-                    # Handle exit button click
-                    pygame.quit()
-                    sys.exit()
+        # Initialise the character select and settings pages
+        self.character_select = CharacterSelect(self.window, self.font, self.background_image)
+        self.settings_page = SettingsPage(self.window, self.font, self.background_image)
 
-        # Clear the screen
-        window.fill(background_color)
+    def draw_button(self, rect, label):
+        pygame.draw.rect(self.window, self.button_background, rect)
+        text = self.font.render(label, True, self.button_text_colour)
+        text_rect = text.get_rect(center=rect.center)
+        self.window.blit(text, text_rect)
 
-        # Draw the buttons
-        pygame.draw.rect(window, button_color, play_button)
-        pygame.draw.rect(window, button_color, settings_button)
-        pygame.draw.rect(window, button_color, exit_button)
+    def run(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    if self.play_button.collidepoint(mouse_x, mouse_y):
+                        # Switch to character selection screen
+                        self.character_select.run()
+                    elif self.settings_button.collidepoint(mouse_x, mouse_y):
+                        # Switch to settings page
+                        self.settings_page.run()
+                    elif self.exit_button.collidepoint(mouse_x, mouse_y):
+                        pygame.quit()
+                        sys.exit()
 
-        # Draw the button labels
-        play_text = font.render("Play", True, (0, 0, 0))
-        window.blit(play_text, (350, 210))
+            self.window.blit(self.background_image, (0, 0))
 
-        settings_text = font.render("Settings", True, (0, 0, 0))
-        window.blit(settings_text, (330, 310))
+            self.draw_button(self.play_button, "Play")
+            self.draw_button(self.settings_button, "Settings")
+            self.draw_button(self.exit_button, "Exit")
 
-        exit_text = font.render("Exit", True, (0, 0, 0))
-        window.blit(exit_text, (360, 410))
+            pygame.display.flip()
 
-        # Update the display
-        pygame.display.flip()
-# Quit the game
+# Create an instance of the Menu class and run the menu
+menu = Menu()
+menu.run()
