@@ -1,4 +1,5 @@
 import pygame
+from assets import GAME_ASSETS
 
 class CharacterSelect:
     """
@@ -27,12 +28,12 @@ class CharacterSelect:
         """
         self.window = window
         self.font = pygame.font.Font(None, 36)  # Use a default font
-        self.background_image = pygame.image.load("AT2/assets/main_menu_background.png").convert()
+        self.background_image = pygame.image.load(GAME_ASSETS['main_menu_background']).convert()
         self.background_image = pygame.transform.scale(self.background_image, (self.window.get_width(), self.window.get_height()))
         self.characters = {
-            "Warrior": pygame.image.load("AT2/assets/warrior_button.png").convert_alpha(),
-            "Mage": pygame.image.load("AT2/assets/mage_button.png").convert_alpha(),
-            "Rogue": pygame.image.load("AT2/assets/rogue_button.png").convert_alpha()
+            "Warrior": pygame.image.load(GAME_ASSETS['warrior_button']).convert_alpha(),
+            "Mage": pygame.image.load(GAME_ASSETS['mage_button']).convert_alpha(),
+            "Rogue": pygame.image.load(GAME_ASSETS['rogue_button']).convert_alpha()
         }
         self.character_buttons = self.setup_character_buttons()
         self.back_button = pygame.Rect(50, self.window.get_height() - 50 - 30, 100, 30)  # Positioned at bottom left

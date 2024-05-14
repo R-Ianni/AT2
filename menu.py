@@ -1,4 +1,5 @@
 import pygame
+from assets import GAME_ASSETS
 
 class MainMenu:
     def __init__(self, window):
@@ -6,7 +7,7 @@ class MainMenu:
         self.font = pygame.font.Font(None, 36)  # Specify the font size and style
         self.menu_options = ['Start Game', 'Settings', 'Exit']
         self.selected_option = 0  # The index of the currently selected menu option
-        self.background_image = pygame.image.load("AT2/assets/main_menu_background.png")  # Load the background image
+        self.background_image = pygame.image.load(GAME_ASSETS['main_menu_background'])  # Load the background image
         # Scale the background image to match the window size
         self.scaled_background = pygame.transform.scale(self.background_image, (self.window.get_width(), self.window.get_height()))
 

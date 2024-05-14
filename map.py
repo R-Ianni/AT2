@@ -1,6 +1,9 @@
-import pygame
-from enemy import Enemy
 import random
+
+import pygame
+from assets import GAME_ASSETS
+from enemy import Enemy
+
 
 class Map:
     def __init__(self, window):
@@ -11,20 +14,20 @@ class Map:
             window (pygame.Surface): The game window surface.
         """
         self.window = window
-        self.map_image = pygame.image.load("AT2/assets/dungeon_map.png").convert_alpha()
+        self.map_image = pygame.image.load(GAME_ASSETS["dungeon_map"]).convert_alpha()
         self.map_image = pygame.transform.scale(self.map_image, (self.window.get_width(), self.window.get_height()))
         self.player_images = {
-            'Warrior': pygame.image.load("AT2/assets/warrior.png").convert_alpha(),
-            'Mage': pygame.image.load("AT2/assets/mage.png").convert_alpha(),
-            'Rogue': pygame.image.load("AT2/assets/rogue.png").convert_alpha()
+            'Warrior': pygame.image.load(GAME_ASSETS['warrior']).convert_alpha(),
+            'Mage': pygame.image.load(GAME_ASSETS['mage']).convert_alpha(),
+            'Rogue': pygame.image.load(GAME_ASSETS["rogue"]).convert_alpha()
         }
         self.player_type = None
         self.player_position = [self.window.get_width() / 2, self.window.get_height() / 2]
         self.enemies = [
-            Enemy("AT2/assets/goblin.png", [50, 50], self.window),
-            Enemy("AT2/assets/orc.png", [self.window.get_width() - 120, 50], self.window),
-            Enemy("AT2/assets/skeleton.png", [50, self.window.get_height() - 120], self.window),
-            Enemy("AT2/assets/skeleton.png", [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
+            Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
+            Enemy(GAME_ASSETS["orc"], [self.window.get_width() - 120, 50], self.window),
+            Enemy(GAME_ASSETS["skeleton"], [50, self.window.get_height() - 120], self.window),
+            Enemy(GAME_ASSETS["skeleton"], [self.window.get_width() - 120, self.window.get_height() - 120], self.window)
         ]
         self.in_combat = False  # Ensure this attribute is defined in the constructor
         self.current_enemy = None
@@ -81,7 +84,7 @@ class Map:
         """
         Spawn the blue orb in the center of the map.
         """
-        self.blue_orb = pygame.image.load("AT2/assets/blue_orb.png").convert_alpha()
+        self.blue_orb = pygame.image.load(GAME_ASSETS["blue_orb"]).convert_alpha()
         self.blue_orb = pygame.transform.scale(self.blue_orb, (50, 50))
         self.orb_position = [self.window.get_width() / 2 - 25, self.window.get_height() / 2 - 25]
 

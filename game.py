@@ -2,10 +2,12 @@ import pygame
 from menu import MainMenu
 from character_select import CharacterSelect
 from map import Map
+from assets import load_assets, GAME_ASSETS
 
 class Game:
     def __init__(self):
         pygame.init()
+        load_assets()  # load the game image assets
         self.window = pygame.display.set_mode((800, 600))
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
         self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
