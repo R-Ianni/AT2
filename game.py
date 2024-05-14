@@ -1,78 +1,56 @@
-import sys
-
 import pygame
-
-from utils import load_image, load_images
-from player import Player
+from menu import MainMenu
+from character_select import CharacterSelect
 from map import Map
-
-BLACK = (0, 0, 0)
+from assets import load_assets, GAME_ASSETS
 
 class Game:
     def __init__(self):
         pygame.init()
+        load_assets()  # load the game image assets
+        self.window = pygame.display.set_mode((800, 600))
+        self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
+        self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
+        self.game_map = Map(self.window)  # Create an instance of the Map class
+        self.state = 'menu'  # Set the initial state to 'menu'
+        self.current_character = None  # To store the chosen character
 
-        pygame.display.set_caption('AT2 game')
-        self.screen = pygame.display.set_mode((640, 320)) # 20 * 40 tileset
-        self.screen.fill(BLACK)
-        self.map = Map(['1111111111111111111111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1100000000000000001111111111111111111111',
-                        '1111111111111111111111111111111111111111',])
-        self.sprite_sheet = pygame.image.load('assets/industrial.png').convert()
-
-        self.clock = pygame.time.Clock()
-
-        self.player = Player('player', (50, 50), (20, 30))
-        
-        self.movement = [False, False]
-        
-        
     def run(self):
         while True:
-            self.screen.fill((33, 36,51))
-            # sprite = pygame.Surface((100, 26))
-            # sprite.set_colorkey((0,0,0))
-            # sprite.blit(self.sprite_sheet,(0, 0),(0, 0, 300, 200))
-            # sprite = pygame.transform.scale(sprite, (76*2,26*2))
+            if self.state == 'menu':  # If the state is 'menu'
+                result = self.menu.run()  # Run the menu and get the result
+                if result == 'Start Game':  # If the result is 'Start Game'
+                    self.state = 'character_select'  # Change the state to 'character_select'
+                elif result == 'Settings':  # If the result is 'Settings'
+                    pass  # Settings handling would go here
+                elif result == 'Exit':  # If the result is 'Exit'
+                    pygame.quit()  # Quit pygame
+                    return  # Exit the run method
 
-            self.player.update(self.movement, self.map)
-            self.player.render(self.screen)
-            # print(self.map.map)
-            self.map.render(self.screen)
-            
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.movement[0] = True
-                    if event.key == pygame.K_RIGHT:
-                        self.movement[1] = True
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
-                        self.movement[0] = False
-                    if event.key == pygame.K_RIGHT:
-                        self.movement[1] = False
-            
-            pygame.display.update()
-            self.clock.tick(60)
+            elif self.state == 'character_select':  # If the state is 'character_select'
+                selected_character = self.character_select.run()  # Run the character select screen and get the selected character
+                if selected_character == 'back':  # If the selected character is 'back'
+                    self.state = 'menu'  # Change the state to 'menu'
+                elif selected_character:  # If a character is selected
+                    self.current_character = selected_character  # Set the current character to the selected character
+                    self.game_map.load_player(selected_character)  # Load the selected character into the game map
+                    self.state = 'game_map'  # Change the state to 'game_map'
 
-Game().run()
+            elif self.state == 'game_map':  # If the state is 'game_map'
+                result = self.game_map.handle_events()  # Handle events in the game map and get the result
+                if result == 'back':  # If the result is 'back'
+                    self.state = 'character_select'  # Change the state to 'character_select'
+                elif result == 'quit':  # If the result is 'quit'
+                    pygame.quit()  # Quit pygame
+                    return  # Exit the run method
+                else:
+                    self.game_map.draw()  # Draw the game map
+
+            for event in pygame.event.get():  # Iterate over the events in the event queue
+                if event.type == pygame.QUIT:  # If the event type is QUIT
+                    pygame.quit()  # Quit pygame
+                    return  # Exit the run method
+
+if __name__ == "__main__":
+    game = Game()  # Create an instance of the Game class
+    game.run()  # Run the game
