@@ -5,8 +5,7 @@ class Character(ABC):
     Abstract class representating the base character
     """
     # Attributes
-    MAX_LEVEL = 50  # Maximum level a character can reach
-    ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
+    __MAX_LEVEL: int = 50  # Maximum level a character can reach TODO: Ask sir whether this needs to be private
     __name: str = None # Name of character
     __character_class: str = None # Character's class
     __armor: int = None # Character's armor value
@@ -50,6 +49,8 @@ class Character(ABC):
         return self.__gold
     def getIsAlive(self):
         return self.__is_alive
+    def getMaxLevel(self):
+        return self.__MAX_LEVEL
 
     # Setters
     def setName(self, name):
@@ -88,7 +89,7 @@ class Character(ABC):
         # Calculate experience required for next level
         required_experience = self.calculateRequiredExperience(self.getLevel())
         # Check if character has enough experience to level up and is below the level cap
-        while self.getExperiencePoints() >= required_experience and self.getLevel() < self.MAX_LEVEL:
+        while self.getExperiencePoints() >= required_experience and self.getLevel() < self.getMaxLevel():
             self.setLevel(self.getLevel() + 1) # Level up the character
             self.setExperiencePoints(self.getExperiencePoints() - required_experience) # Decrease character's experience points
             # Calculate experience required for next level
