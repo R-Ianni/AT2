@@ -1,54 +1,116 @@
-class Character:
+from abc import ABC, abstractmethod
+
+class Character(ABC):
+    """
+    Abstract class representating the base character
+    """
+    # Attributes
     MAX_LEVEL = 50  # Maximum level a character can reach
     ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
+    __name: str = None # Name of character
+    __character_class: str = None # Character's class
+    __armor: int = None # Character's armor value
+    __level: int = 1 # Character's current level
+    __experience_points: int = 0 # Character's experience points
+    __hit_points: int = None # Character's current hit points
+    __max_health: int = None # Character's max health
+    __skills: dict = {} # Character's skills
+    __inventory: list = [] # Character's inventory
+    __gold: int = 0 # Character's gold
+    __is_alive:bool = True
 
-    def __init__(self, name, character_class, armor):
-        self.name = name  # Character's name
-        self.character_class = character_class  # Character's class
-        self.armor = armor  # Character's armor value
-        self.level = 1  # Character's current level
-        self.experience_points = 0  # Character's current experience points
-        self.hit_points = 10  # Example starting value for character's hit points
-        self.armor_class = 10  # Example starting value for character's armor class
-        self.skills = {}  # Example empty dictionary for character's skills
-        self.inventory = []  # Example empty list for character's inventory
-        self.gold = 0  # Example starting value for character's gold
-        self.attribute_points = 0  # Attribute points available to allocate
+    # Constructor
+    def __init__(self, name, character_class, armor, max_health):
+        self.setName(name) 
+        self.setCharacterClass(character_class) 
+        self.setArmor(armor) 
+        self.setMaxHealth(max_health)
+        self.setHitPoints(max_health)
 
-    def assign_attribute_points(self, attribute, points):
-        # Ensure the attribute exists before assigning points
-        if attribute in self.__dict__:
-            setattr(self, attribute, getattr(self, attribute) + points)  # Add points to the attribute
-            self.attribute_points -= points  # Decrease available attribute points
-        else:
-            print(f"Error: Attribute '{attribute}' does not exist.")
+    # Getters
+    def getName(self):
+        return self.__name
+    def getCharacterClass(self):
+        return self.__character_class
+    def getLevel(self):
+        return self.__level
+    def getArmor(self):
+        return self.__armor
+    def getExperiencePoints(self):
+        return self.__experience_points
+    def getHitPoints(self):
+        return self.__hit_points
+    def getMaxHealth(self):
+        return self.__max_health
+    def getSkills(self):
+        return self.__skills
+    def getInventory(self):
+        return self.__inventory
+    def getGold(self):
+        return self.__gold
+    def getIsAlive(self):
+        return self.__is_alive
 
-    def gain_experience(self, experience):
-        self.experience_points += experience  # Increase character's experience points
+    # Setters
+    def setName(self, name):
+        self.__name = name
+    def setCharacterClass(self, character_class):
+        self.__character_class = character_class
+    def setLevel(self, level):
+        self.__level = level
+    def setArmor(self, armor):
+        self.__armor = armor
+    def setExperiencePoints(self, experience_points):
+        self.__experience_points = experience_points
+    def setHitPoints(self, hit_points):
+        self.__hit_points = hit_points
+        if self.getHitPoints() <= 0: # If health zero or negative, sets health to 0 and character to dead.
+            self.setHitPoints(0)
+            self.setIsAlive(False)
+    def setMaxHealth(self, max_health):
+        self.__max_health = max_health
+    def setSkills(self, skills):
+        self.__skills= skills
+    def setInventory(self, inventory):
+        self.__inventory = inventory
+    def setGold(self, gold):
+        self.__gold = gold
+    def setIsAlive(self, is_alive):
+        self.__is_alive = is_alive 
+
+    # Methods
+    def gainExperience(self, experience):
+        """
+        Increases character's experience, and increases levels accordingly. 
+        Runs stat increase based on levels gained.
+        """
+        self.setExperiencePoints(self.getExperiencePoints() + experience)  # Increase character's experience points
         # Calculate experience required for next level
-        required_experience = self.calculate_required_experience(self.level + 1)
+        required_experience = self.calculateRequiredExperience(self.getLevel())
         # Check if character has enough experience to level up and is below the level cap
-        while self.experience_points >= required_experience and self.level < self.MAX_LEVEL:
-            self.level += 1  # Level up the character
-            self.experience_points -= required_experience  # Decrease character's experience points
-            self.hit_points += 10  # Example: Increase hit points by 10 each level up
-            self.attribute_points += self.ATTRIBUTE_POINTS_PER_LEVEL  # Allocate attribute points
-            print(f"Level up! {self.name} is now level {self.level}.")
+        while self.getExperiencePoints() >= required_experience and self.getLevel() < self.MAX_LEVEL:
+            self.setLevel(self.getLevel() + 1) # Level up the character
+            self.setExperiencePoints(self.getExperiencePoints() - required_experience) # Decrease character's experience points
             # Calculate experience required for next level
-            required_experience = self.calculate_required_experience(self.level + 1)
+            required_experience = self.calculateRequiredExperience(self.getLevel())
+        print(f"Level up! {self.getName()} is now level {self.getLevel()}.")
+        # TODO: Add stat increase function.
 
-    def calculate_required_experience(self, level):
-        # Example exponential scaling: Each level requires 100 more experience points than the previous level
-        return int(100 * (1.5 ** (level - 1)))
+    def calculateRequiredExperience(self, level): # level = current level
+        """
+        Calculates total required experience to get to next level
+        """
+        return int(100 * (1.5 ** (level)))
 
-    def is_alive(self):
-        return self.hit_points > 0
-
-    def take_damage(self, amount):
-        # Calculate the actual damage taken, taking into account the character's armor
+    def takeDamage(self, amount): # amount = raw damage
+        """
+        Calculate the actual damage taken, taking into account the character's armor.
+        Then subtract from character's hitpoint.
+        """
         actual_damage = max(0, amount - self.armor)
-        self.hit_points -= actual_damage
-        if self.hit_points <= 0:
-            print(f"{self.name} takes {actual_damage} damage and has been defeated!")
+        self.setHitPoints(self.getHitPoints() - actual_damage)
+        if self.getHitPoints() <= 0:
+            self.setIsAlive(False)
+            print(f"{self.getName()} takes {actual_damage} damage and has been defeated!")
         else:
-            print(f"{self.name} takes {actual_damage} damage. Remaining hit points: {self.hit_points}")
+            print(f"{self.getName()} takes {actual_damage} damage. Remaining hit points: {self.getHitPoints()}/{self.getMaxHealth()}")
