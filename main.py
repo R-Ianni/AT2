@@ -1,55 +1,123 @@
 import pygame
-from menu import MainMenu
+from startmenu import StartMenu
 from character_select import CharacterSelect
-from map import Map
+from map import GameMap
 from assets import load_assets, GAME_ASSETS
+from pygame.locals import *
+
+#
+# COMPLETE FOR NOW
+#
 
 class Game:
+    # Attributes
+    __SCREEN_WIDTH = 1200
+    __SCREEN_HEIGHT = 900
+    __screen = None # game display
+    __start_menu = None # StartMenu class
+    __game_map = None # GameMap class
+    __battle = None # Battle class
+    __state = None # State of game: ['startmenu', 'gamemap', 'battle'] # TODO pause state
+    __is_running = None
+
+    # Constructor
     def __init__(self):
-        pygame.init()
-        load_assets()  # load the game image assets
-        self.window = pygame.display.set_mode((800, 600))
-        self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
-        self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
-        self.game_map = Map(self.window)  # Create an instance of the Map class
-        self.state = 'menu'  # Set the initial state to 'menu'
-        self.current_character = None  # To store the chosen character
+        pygame.init() # Initialise pygame
+        load_assets() # load game image assets
+        self.setScreen(pygame.display.set_mode((self.__SCREEN_WIDTH, self.__SCREEN_HEIGHT)))
+        self.setStartMenu(StartMenu(self.getScreen()))
+        #self.setGameMap(GameMap(self.getScreen()))
+        #self.setBattle(Battle(self.getScreen()))
+        self.setState('startmenu')
+        self.setIsRunning(True)
+
+    # Getters
+    def getScreen(self):
+        return self.__screen
+    def getStartMenu(self):
+        return self.__start_menu
+    def getGameMap(self):
+        return self.__game_map
+    def getBattle(self):
+        return self.__battle
+    def getState(self):
+        return self.__state
+    def getIsRunning(self):
+        return self.__is_running
+
+    # Setters
+    def setScreen(self, screen):
+        self.__screen = screen
+    def setStartMenu(self, start_menu):
+        self.__start_menu = start_menu
+    def setGameMap(self, game_map):
+        self.__game_map = game_map
+    def setBattle(self, battle):
+        self.__battle = battle 
+    def setState(self, state):
+        self.__state = state
+    def setIsRunning(self, is_running):
+        self.__is_running = is_running
+
+    # Methods
+
+    def handleStartMenu(self):
+        """
+        Runs if state == 'start_menu'. Runs StartMenu class.
+        Returns 'quit' if quit button hit; Returns 'start' if start button hit.
+        """
+        self.getStartMenu().run()
+        result = self.getStartMenu().getOutput()
+        if result == 'start':
+            self.setState('gamemap')
+        elif result == 'quit':
+            self.setIsRunning(False)
+    
+    def handleGameMap(self):
+        """
+        Runs if state == 'gamemap'. Runs GameMap class
+        Returns 'quit' if game is quit; Returns 'battle' if battle is started
+        """
+        result = self.getGameMap().run()
+        if result == 'battle':
+            self.setState('battle')
+        elif result == 'quit':
+            self.setIsRunning(False)
+    
+    def handleBattle(self):
+        """
+        Runs if state == 'battle'. Runs Battle class.
+        TODO
+        """
+        pass
+    
+    def onCleanup(self):
+        """
+        Runs when game loop ends - is_running == False. Quits pygame.
+        TODO make this save game
+        """
+        pygame.quit()
 
     def run(self):
-        while True:
-            if self.state == 'menu':  # If the state is 'menu'
-                result = self.menu.run()  # Run the menu and get the result
-                if result == 'Start Game':  # If the result is 'Start Game'
-                    self.state = 'character_select'  # Change the state to 'character_select'
-                elif result == 'Settings':  # If the result is 'Settings'
-                    pass  # Settings handling would go here
-                elif result == 'Exit':  # If the result is 'Exit'
-                    pygame.quit()  # Quit pygame
-                    return  # Exit the run method
+        """
+        Runs the game loop
+        """
+        while self.getIsRunning() == True:
+            # Event handler for QUIT
+            for event in pygame.event.get(): 
+                if event.type == QUIT:
+                    self.setIsRunning(False)
 
-            elif self.state == 'character_select':  # If the state is 'character_select'
-                selected_character = self.character_select.run()  # Run the character select screen and get the selected character
-                if selected_character == 'back':  # If the selected character is 'back'
-                    self.state = 'menu'  # Change the state to 'menu'
-                elif selected_character:  # If a character is selected
-                    self.current_character = selected_character  # Set the current character to the selected character
-                    self.game_map.load_player(selected_character)  # Load the selected character into the game map
-                    self.state = 'game_map'  # Change the state to 'game_map'
+            if self.getState() == 'startmenu':  # If the state is 'startmenu'
+                self.handleStartMenu()
 
-            elif self.state == 'game_map':  # If the state is 'game_map'
-                result = self.game_map.handle_events()  # Handle events in the game map and get the result
-                if result == 'back':  # If the result is 'back'
-                    self.state = 'character_select'  # Change the state to 'character_select'
-                elif result == 'quit':  # If the result is 'quit'
-                    pygame.quit()  # Quit pygame
-                    return  # Exit the run method
-                else:
-                    self.game_map.draw()  # Draw the game map
+            elif self.getState() == 'gamemap':  # If the state is 'game_map'
+                self.handleGameMap()
+            
+            elif self.getState() == 'battle':  # If the state is 'battle'
+                self.handleBattle()
 
-            for event in pygame.event.get():  # Iterate over the events in the event queue
-                if event.type == pygame.QUIT:  # If the event type is QUIT
-                    pygame.quit()  # Quit pygame
-                    return  # Exit the run method
+        self.onCleanup() # Runs cleanup, TODO save game.
 
 if __name__ == "__main__":
     game = Game()  # Create an instance of the Game class

@@ -1,11 +1,13 @@
 import random
-
 import pygame
 from assets import GAME_ASSETS
-from enemy import Enemy
+from Enemies.enemy import Enemy
+from pygame.locals import *
 
-
-class Map:
+class GameMap:
+    """
+    
+    """
     def __init__(self, window):
         """
         Initialize the Map class.
@@ -13,6 +15,7 @@ class Map:
         Args:
             window (pygame.Surface): The game window surface.
         """
+        
         self.window = window
         self.map_image = pygame.image.load(GAME_ASSETS["dungeon_map"]).convert_alpha()
         self.map_image = pygame.transform.scale(self.map_image, (self.window.get_width(), self.window.get_height()))

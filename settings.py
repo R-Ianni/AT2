@@ -1,17 +1,25 @@
 import pygame
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
 # settings.py
-
 class Settings:
     def __init__(self, window):
         self.window = window
         self.font = pygame.font.Font(None, 36)
         self.options = ["Volume", "Graphics", "Back"]
         self.selected_option = 0
+        self.running = True
 
     def run(self):
-        running = True
-        while running:
+        while self.running:
             self.window.fill((0, 0, 0))
             for index, option in enumerate(self.options):
                 color = (255, 0, 0) if index == self.selected_option else (255, 255, 255)
@@ -21,7 +29,7 @@ class Settings:
             pygame.display.flip()
 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == QUIT:
                     return 'quit'
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
