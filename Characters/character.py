@@ -1,14 +1,41 @@
-from abc import ABC, abstractmethod
 import pygame
-# TODO Ask sir about the naming convention/getters and setters for constant variables.
-class Character(ABC):
+from pygame.locals import *
+from assets import GAME_ASSETS
+
+class Character():
     """
-    Abstract class representating the base character
+    A class representing a character
+
+    Attributes:
+    MAX_LEVEL (int): Maximum level of character
+    LVLUP_ATK_INCR (int): Number of points attack increases per level
+    LVLUP_DEF_INCR (int): Number of points defence increases per level
+    WORLD_SPEED (int): Number of pixels character moves per frame
+
+    surf (pygame.image): Surface for the character
+    rect (pygame.Rect): Rectangle representing character surface position
+    name (str): Name of character
+    attack (int): Attack stat
+    defence (int): Defence stat
+    movement_points (int): Movement points stat
+    level (int): Level stat
+    experience points (int): Experience point stat
+    hit_points (int): Current hit points stat
+    max_health (int): Maximum hit points stat
+    weapon (Weapon): Currently held weapon
+    is_alive (bool): Whether character's hit points above 0 or not
+    skills (list: Skills): List of skills the character has
+
+    Methods:
+    gainExperience(self, experience): 
+    updateStats(self)
     """
+    
     # Attributes
-    __MAX_LEVEL = 50
-    __LVLUP_ATK_INCR = 2
-    __LVLUP_DEF_INCR = 2
+    MAX_LEVEL = 50
+    LVLUP_ATK_INCR = 2
+    LVLUP_DEF_INCR = 2
+    WORLD_SPEED = 5
     __surf = None
     __rect = None
     __name = None
@@ -22,25 +49,28 @@ class Character(ABC):
     __weapon = None
     __is_alive = None
     __skills = None
-    __world_speed = None
-    # board position
+    
+    # TODO add attribute describing board position
+    # TODO generalise character, enemy under entity class.
+
+    # Example character:
+    # Character(pygame.image.load(GAME_ASSETS['blue_orb'], )
 
     # Constructor
-    def __init__(self, surf, rect, name, attack, defence, movement_points, level, experience_points, hit_points, max_health, weapon, is_alive, skills, world_speed):
+    def __init__(self, surf, name, attack, defence, movement_points, level, experience_points, hit_points, max_health, weapon, is_alive, skills):
         self.setSurf(surf)
-        self.setRect(rect)
-        self.setName(name)
-        self.setAttack(attack)
-        self.setDefence(defence)
-        self.setMovementPoints(movement_points)
-        self.setLevel(level)
-        self.setExperiencePoints(experience_points)
-        self.setHitPoints(hit_points)
-        self.setMaxHealth(max_health)
-        self.setWeapon(weapon)
-        self.setIsAlive(is_alive)
-        self.setSkills(skills)
-        self.setWorldSpeed(world_speed)
+        self.setRect(self.getSurf().get_rect())
+        self.setName(name) # replace with name
+        self.setAttack(25)
+        self.setDefence(25)
+        self.setMovementPoints(2)
+        self.setLevel(1)
+        self.setExperiencePoints(0)
+        self.setHitPoints(1000)
+        self.setMaxHealth(1000)
+        self.setWeapon('fists') # TODO replace with starter weapon / character initialisation screen.
+        self.setIsAlive(True)
+        self.setSkills(list())
 
     # Getters
     def getSurf(self):
@@ -69,8 +99,6 @@ class Character(ABC):
         return self.__is_alive
     def getSkills(self):
         return self.__skills
-    def getWorldSpeed(self):
-        return self.__world_speed
 
     # Setters
     def setSurf(self, surf):
@@ -99,29 +127,32 @@ class Character(ABC):
         self.__is_alive = is_alive
     def setSkills(self, skills):
         self.__skills = skills
-    def setWorldSpeed(self, world_speed):
-        self.__world_speed = world_speed
 
     # Methods
     def gainExperience(self, experience):
         """
-        Increases character's experience, and increases levels accordingly. 
-        Runs stat increase based on levels gained.
+        Increases character's experience, and increases levels accordingly. Subtracts used experience.
+        Runs stat increase method based on levels gained.
         """
         self.setExperiencePoints(self.getExperiencePoints() + experience)  # Increase character's experience points
-        # Calculate experience required for next level
-        required_experience = self.calcRequiredExperience()
-        # Check if character has enough experience to level up and is below the level cap
-        while self.getExperiencePoints() >= required_experience and self.getLevel() < self.getMaxLevel():
-            self.setLevel(self.getLevel() + 1) # Level up the character
-            self.setExperiencePoints(self.getExperiencePoints() - required_experience) # Decrease character's experience points
-            # Calculate experience required for next level
-            required_experience = self.calcRequiredExperience()
-        print(f"Level up! {self.getName()} is now level {self.getLevel()}.")
-        # TODO: Add stat increase function.
+        required_experience = self.calcRequiredExperience() # Calculate experience required for next level
 
-    def increaseStats(self):
-        pass
+        # Level up character while character has enough experience to level up and is below the level cap.
+        while self.getExperiencePoints() >= required_experience and self.getLevel() < self.MAX_LEVEL:
+            self.setLevel(self.getLevel() + 1) # Level up the character if sufficient experience.
+            self.setExperiencePoints(self.getExperiencePoints() - required_experience) # Decrease character's experience points based on those used.
+            required_experience = self.calcRequiredExperience() # Re-calculate experience required for next level
+
+        self.updateStats() # TODO have it also print out stat gains. If stat gains are more than 1, then print.
+        print(f"Level up! {self.getName()} is now level {self.getLevel()}.")
+
+    def updateStats(self):
+        """
+        Updates attack, defence based on level. Formula: 25 + 2 * level
+        Returns tuple: (increase in attack, increase in defence)
+        """
+        self.setAttack(25 + 2 * self.getLevel())
+        self.setDefence(25 + 2 * self.getLevel())
 
     def calcRequiredExperience(self):
         """

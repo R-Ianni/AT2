@@ -3,29 +3,26 @@ from pygame.locals import *
 from assets import GAME_ASSETS
 from button import Button
 
-#
-## COMPLETE
-#
+
 
 class StartMenu:
     """
     Class that represents the start menu.
 
     Attributes:
-    screen: pygame.display
-    start_button: Button
-    quit_button: Button
-    button_group: pygame.sprite.Group
-    is_running: bool
-    output: str
-
-    Constructor: (screen)
+        screen (pygame.display): Display on which all objects are blitted.
+        start_button (Button): Button to start
+        quit_button (Button): Button to quit
+        button_group (pygame.sprite.Group): Group that contains start_button and quit_button
+        is_running (bool): Represents if the startmenu loop is running
+        output (str): Represents the next state the game is to enter: 
+            ['start' -> gamemenu, 'quit' -> end game loop]
 
     Methods:
-    run(): runs start menu.
-    Returns 'quit' if game is to quit, returns 'start' if game is to start.
-
+        run(): runs start menu loop
+            Returns 'quit' if game is to quit, returns 'start' if game is to start.
     """
+
     # Attributes
     __screen = None 
     __start_button = None
@@ -35,14 +32,14 @@ class StartMenu:
     __output = None
 
     # Constructor
-    def __init__(self, screen):
+    def __init__(self, screen, start_button, quit_button, button_group, is_running):
         self.setScreen(screen)
-        self.setStartButton(Button(pygame.image.load(GAME_ASSETS['start_button']).convert(), 'start', 600, 300))
-        self.setQuitButton(Button(pygame.image.load(GAME_ASSETS['exit_button']).convert(), 'quit', 600, 600)) # TODO change the exit button to quit button
-        self.setButtonGroup(pygame.sprite.Group())
+        self.setStartButton(start_button)
+        self.setQuitButton(quit_button) # TODO change the exit button to quit button
+        self.setButtonGroup(button_group)
         self.getButtonGroup().add(self.getStartButton()) # adds start button to button group
         self.getButtonGroup().add(self.getQuitButton()) # adds quit button to button group
-        self.setIsRunning(True)
+        self.setIsRunning(is_running)
 
     # Getters
     def getScreen(self):

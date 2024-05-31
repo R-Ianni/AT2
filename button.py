@@ -4,32 +4,28 @@ class Button(pygame.sprite.Sprite):
     """
     Class for a generalised button.
     Attributes:
-    surf: pygame.image
-    rect: pygame.Rect
-    output: str
-    x_coord: int
-    y_coord: int
+        surf (pygame.image): Surface for the button.
+        rect (pygame.Rect): Rectangle underlying the button.
+        output (str): What the button should return when clicked
+        coords (tuple: int, int): Coordinates of the centre of button
 
-    Constructor: (button_image, output, x_coord, y_coord)
-
-    # TODO Check since this class has no methods
+    Constructor: (button_image, output, coords)
     """
+
     # Attributes
     __surf = None
     __rect = None
     __output = None
-    __x_coord = None
-    __y_coord = None
+    __coords = None
 
     # Constructor
-    def __init__(self, button_image, output, x_coord, y_coord):
+    def __init__(self, button_image, output, coords):
         super().__init__()
         self.setSurf(button_image) # sets surface to be the inputted image
-        self.setRect(self.getSurf().get_rect())
-        self.setOutput(output)
-        self.setXCoord(x_coord)
-        self.setYCoord(y_coord)
-        self.getRect().center = (self.getXCoord(), self.getYCoord())
+        self.setRect(self.getSurf().get_rect()) # rectangle of surface
+        self.setOutput(output) # what button returns when clicked
+        self.setCoords(coords) # coordinates for button
+        self.getRect().center = self.getCoords() # sets centre of button to be inputted coords
 
     # Getters
     def getSurf(self):
@@ -38,10 +34,8 @@ class Button(pygame.sprite.Sprite):
         return self.__rect
     def getOutput(self):
         return self.__output
-    def getXCoord(self):
-        return self.__x_coord
-    def getYCoord(self):
-        return self.__y_coord
+    def getCoords(self):
+        return self.__coords
 
     # Setters
     def setSurf(self, surf):
@@ -50,7 +44,5 @@ class Button(pygame.sprite.Sprite):
         self.__rect = rect
     def setOutput(self, output):
         self.__output = output
-    def setXCoord(self, x_coord):
-        self.__x_coord = x_coord
-    def setYCoord(self, y_coord):
-        self.__y_coord = y_coord
+    def setCoords(self, coords):
+        self.__coords = coords
