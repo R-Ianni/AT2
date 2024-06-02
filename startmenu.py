@@ -15,9 +15,11 @@ class StartMenu:
         quit_button (Button): Button to quit
         button_group (pygame.sprite.Group): Group that contains start_button and quit_button
         is_running (bool): Represents if the startmenu loop is running
-        output (str): Represents the next state the game is to enter: 
-            ['start' -> gamemenu, 'quit' -> end game loop]
+        output (str): Output to be returned to main once loop finished. Represents next state game will enter:
+            ['start' -> run GameMenu, 'quit' -> end game loop]
 
+    Constructor: (screen, start_button, quit_button, button_group, is_running)
+            
     Methods:
         run(): runs start menu loop
             Returns 'quit' if game is to quit, returns 'start' if game is to start.

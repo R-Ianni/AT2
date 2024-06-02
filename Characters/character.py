@@ -7,41 +7,42 @@ class Character():
     A class representing a character
 
     Attributes:
-    MAX_LEVEL (int): Maximum level of character
-    LVLUP_ATK_INCR (int): Number of points attack increases per level
-    LVLUP_DEF_INCR (int): Number of points defence increases per level
-    WORLD_SPEED (int): Number of pixels character moves per frame
+        MAX_LEVEL (int): Maximum level of character
+        LVLUP_ATK_INCR (int): Number of points attack increases per level
+        LVLUP_DEF_INCR (int): Number of points defence increases per level
 
-    surf (pygame.image): Surface for the character
-    rect (pygame.Rect): Rectangle representing character surface position
-    name (str): Name of character
-    attack (int): Attack stat
-    defence (int): Defence stat
-    movement_points (int): Movement points stat
-    level (int): Level stat
-    experience points (int): Experience point stat
-    hit_points (int): Current hit points stat
-    max_health (int): Maximum hit points stat
-    weapon (Weapon): Currently held weapon
-    is_alive (bool): Whether character's hit points above 0 or not
-    skills (list: Skills): List of skills the character has
+        surf (pygame.image): Pygame surface image for the character
+        rect (pygame.Rect): Rectangle representing character surface position
+        name (str): Name of character
+        attack (int): Attack stat
+        defence (int): Defence stat
+        level (int): Level stat
+        experience points (int): Experience point stat
+        hit_points (int): Current hit points stat
+        max_health (int): Maximum hit points stat
+        weapon (Weapon): Currently held weapon
+        is_alive (bool): Whether character's hit points above 0 or not
+        skills (list: Skills): List of skills the character has
+
+    Constructor: (surf, name, attack, defence, level, experience_points, hit_points, max_health, weapon, is_alive, skills)
 
     Methods:
-    gainExperience(self, experience): 
-    updateStats(self)
+        gainExperience(self, experience): 
+        updateStats(self)
+        calcRequiredExperience(self)
+        takeDamage(self, damage)
+        updatePosition(self, pressed_keys)
     """
     
     # Attributes
     MAX_LEVEL = 50
     LVLUP_ATK_INCR = 2
     LVLUP_DEF_INCR = 2
-    WORLD_SPEED = 5
     __surf = None
     __rect = None
     __name = None
     __attack = None
     __defence = None
-    __movement_points = None
     __level = None
     __experience_points = None
     __hit_points = None
@@ -54,23 +55,23 @@ class Character():
     # TODO generalise character, enemy under entity class.
 
     # Example character:
-    # Character(pygame.image.load(GAME_ASSETS['blue_orb'], )
+    # Character(pygame.image.load(GAME_ASSETS['blue_orb'], 'Bob', 25, 25, 1, 0, 1000, 1000, 'sword', True, 'www')
 
     # Constructor
-    def __init__(self, surf, name, attack, defence, movement_points, level, experience_points, hit_points, max_health, weapon, is_alive, skills):
+    def __init__(self, surf, name, attack, defence, level, experience_points, hit_points, max_health, weapon, is_alive, skills):
         self.setSurf(surf)
         self.setRect(self.getSurf().get_rect())
-        self.setName(name) # replace with name
-        self.setAttack(25)
-        self.setDefence(25)
-        self.setMovementPoints(2)
-        self.setLevel(1)
-        self.setExperiencePoints(0)
-        self.setHitPoints(1000)
-        self.setMaxHealth(1000)
-        self.setWeapon('fists') # TODO replace with starter weapon / character initialisation screen.
-        self.setIsAlive(True)
-        self.setSkills(list())
+        self.setName(name)
+        self.setAttack(attack)
+        self.setDefence(defence)
+        self.setLevel(level)
+        self.setExperiencePoints(experience_points)
+        self.setHitPoints(hit_points)
+        self.setMaxHealth(max_health)
+        self.setHitPoints(self.getMaxHealth())
+        self.setWeapon(weapon) # TODO replace with starter weapon / character initialisation screen.
+        self.setIsAlive(is_alive)
+        self.setSkills(skills)
 
     # Getters
     def getSurf(self):
@@ -83,8 +84,6 @@ class Character():
         return self.__attack
     def getDefence(self):
         return self.__defence
-    def getMovementPoints(self):
-        return self.__movement_points
     def getLevel(self):
         return self.__level
     def getExperiencePoints(self):
@@ -111,16 +110,23 @@ class Character():
         self.__attack = attack
     def setDefence(self, defence):
         self.__defence = defence
-    def setMovementPoints(self, movement_points):
-        self.__movement_points = movement_points
     def setLevel(self, level):
         self.__level = level
     def setExperiencePoints(self, experience_points):
         self.__experience_points = experience_points
     def setHitPoints(self, hit_points):
-        self.__hit_points = hit_points
+        max_health = self.getMaxHealth() 
+        if hit_points > max_health: # ensures 0 <= hit_points <= max_health
+            self.__hit_points = max_health
+        elif hit_points < max_health:
+            self.__hit_points = 0
+        else:
+            self.__hit_points = hit_points
     def setMaxHealth(self, max_health):
-        self.__max_health = max_health
+        if max_health <= 0: # makes sure max_health > 0
+            self.setMaxHealth(1)
+        else:
+            self.__max_health = max_health
     def setWeapon(self, weapon):
         self.__weapon = weapon
     def setIsAlive(self, is_alive):
@@ -151,24 +157,37 @@ class Character():
         Updates attack, defence based on level. Formula: 25 + 2 * level
         Returns tuple: (increase in attack, increase in defence)
         """
+        original_attack = self.getAttack()
+        original_defence = self.getDefence()
         self.setAttack(25 + 2 * self.getLevel())
         self.setDefence(25 + 2 * self.getLevel())
+        return (self.getAttack() - original_attack, self.getDefence() - original_defence) # returns (gain in attack, gain in defence)
 
     def calcRequiredExperience(self):
         """
         Calculates total required experience to get to next level
-        """
-        return int(100 * (1.5 ** (self.getLevel())))
+        """ 
+        return int(100 * (1.5 ** (self.getLevel()))) # Current formula TODO change: 100 * 1.5^level.
 
     def takeDamage(self, amount): # amount = raw damage
         """
         Calculate the actual damage taken, taking into account the character's defence.
         Then subtract from character's hitpoint.
         """
-        actual_damage = max(0, amount - self.defence)
+        actual_damage = max(0, amount - self.defence) # TODO change formula
         self.setHitPoints(self.getHitPoints() - actual_damage)
         if self.getHitPoints() <= 0:
             self.setIsAlive(False)
             print(f"{self.getName()} takes {actual_damage} damage and has been defeated!")
         else:
             print(f"{self.getName()} takes {actual_damage} damage. Remaining hit points: {self.getHitPoints()}/{self.getMaxHealth()}")
+
+    def updatePosition(self, pressed_keys):
+        if pressed_keys[K_LEFT]:
+            self.getRect().moveip((-5, 0))
+        if pressed_keys[K_RIGHT]:
+            self.getRect().moveip((5, 0))
+        if pressed_keys[K_UP]:
+            self.getRect().moveip((0, -5))
+        if pressed_keys[K_DOWN]:
+            self.getRect().moveip((0, 5))
