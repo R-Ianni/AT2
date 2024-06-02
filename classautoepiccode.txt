@@ -1,43 +1,73 @@
 # Attributes
-__world_file = None
-__state = None
+__screen = None
 __character = None
-__game_menu = None
+__all_sprites = None
+__tile_group = None
+__npc_group = None
+__enemy_group = None
+__world_file = None
+__internal_state = None
+__turn_tracker = None
 __is_running = None
 __output = None
 
 # Constructor
-def __init__(self, world_file, state, character, game_menu, is_running, output):
-    self.setWorldFile(world_file)
-    self.setState(state)
+def __init__(self, screen, character, all_sprites, tile_group, npc_group, enemy_group, world_file, internal_state, turn_tracker, is_running, output):
+    self.setScreen(screen)
     self.setCharacter(character)
-    self.setGameMenu(game_menu)
+    self.setAllSprites(all_sprites)
+    self.setTileGroup(tile_group)
+    self.setNpcGroup(npc_group)
+    self.setEnemyGroup(enemy_group)
+    self.setWorldFile(world_file)
+    self.setInternalState(internal_state)
+    self.setTurnTracker(turn_tracker)
     self.setIsRunning(is_running)
     self.setOutput(output)
 
 # Getters
-def getWorldFile(self):
-    return self.__world_file
-def getState(self):
-    return self.__state
+def getScreen(self):
+    return self.__screen
 def getCharacter(self):
     return self.__character
-def getGameMenu(self):
-    return self.__game_menu
+def getAllSprites(self):
+    return self.__all_sprites
+def getTileGroup(self):
+    return self.__tile_group
+def getNpcGroup(self):
+    return self.__npc_group
+def getEnemyGroup(self):
+    return self.__enemy_group
+def getWorldFile(self):
+    return self.__world_file
+def getInternalState(self):
+    return self.__internal_state
+def getTurnTracker(self):
+    return self.__turn_tracker
 def getIsRunning(self):
     return self.__is_running
 def getOutput(self):
     return self.__output
 
 # Setters
-def setWorldFile(self, world_file):
-    self.__world_file = world_file
-def setState(self, state):
-    self.__state = state
+def setScreen(self, screen):
+    self.__screen = screen
 def setCharacter(self, character):
     self.__character = character
-def setGameMenu(self, game_menu):
-    self.__game_menu = game_menu
+def setAllSprites(self, all_sprites):
+    self.__all_sprites = all_sprites
+def setTileGroup(self, tile_group):
+    self.__tile_group = tile_group
+def setNpcGroup(self, npc_group):
+    self.__npc_group = npc_group
+def setEnemyGroup(self, enemy_group):
+    self.__enemy_group = enemy_group
+def setWorldFile(self, world_file):
+    self.__world_file = world_file
+def setInternalState(self, internal_state):
+    self.__internal_state = internal_state
+def setTurnTracker(self, turn_tracker):
+    self.__turn_tracker = turn_tracker
 def setIsRunning(self, is_running):
     self.__is_running = is_running
 def setOutput(self, output):

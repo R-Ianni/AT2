@@ -181,13 +181,3 @@ class Character():
             print(f"{self.getName()} takes {actual_damage} damage and has been defeated!")
         else:
             print(f"{self.getName()} takes {actual_damage} damage. Remaining hit points: {self.getHitPoints()}/{self.getMaxHealth()}")
-
-    def updatePosition(self, pressed_keys):
-        if pressed_keys[K_LEFT]:
-            self.getRect().moveip((-5, 0))
-        if pressed_keys[K_RIGHT]:
-            self.getRect().moveip((5, 0))
-        if pressed_keys[K_UP]:
-            self.getRect().moveip((0, -5))
-        if pressed_keys[K_DOWN]:
-            self.getRect().moveip((0, 5))
