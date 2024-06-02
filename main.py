@@ -147,8 +147,6 @@ if __name__ == "__main__":
     game = Game(
         SCREEN, 
         StartMenu(SCREEN,
-                  Button(pygame.image.load(GAME_ASSETS['start_button']).convert(), 'start', (600, 300)),
-                  Button(pygame.image.load(GAME_ASSETS['exit_button']).convert(), 'quit', (600, 600)),
                   pygame.sprite.Group(),
                   True), # StartMenu object
         'game_world', # GameWorld object

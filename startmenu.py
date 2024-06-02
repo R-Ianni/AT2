@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from assets import GAME_ASSETS
 from button import Button
-
+# TODO Make an automatic positioning system for buttons, when new game/load game added.
 
 
 class StartMenu:
@@ -11,8 +11,6 @@ class StartMenu:
 
     Attributes:
         screen (pygame.display): Display on which all objects are blitted.
-        start_button (Button): Button to start
-        quit_button (Button): Button to quit
         button_group (pygame.sprite.Group): Group that contains start_button and quit_button
         is_running (bool): Represents if the startmenu loop is running
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
@@ -21,35 +19,27 @@ class StartMenu:
     Constructor: (screen, start_button, quit_button, button_group, is_running)
             
     Methods:
-        run(): runs start menu loop
+        initialiseButtons(self): Creates start, quit buttons and adds them to button_group 
+        run(self): runs start menu loop
             Returns 'quit' if game is to quit, returns 'start' if game is to start.
     """
 
     # Attributes
     __screen = None 
-    __start_button = None
-    __quit_button = None 
     __button_group = None 
     __is_running = None
     __output = None
 
     # Constructor
-    def __init__(self, screen, start_button, quit_button, button_group, is_running):
+    def __init__(self, screen, button_group, is_running):
         self.setScreen(screen)
-        self.setStartButton(start_button)
-        self.setQuitButton(quit_button) # TODO change the exit button to quit button
         self.setButtonGroup(button_group)
-        self.getButtonGroup().add(self.getStartButton()) # adds start button to button group
-        self.getButtonGroup().add(self.getQuitButton()) # adds quit button to button group
         self.setIsRunning(is_running)
+        self.initialiseButtons()
 
     # Getters
     def getScreen(self):
         return self.__screen
-    def getStartButton(self):
-        return self.__start_button
-    def getQuitButton(self):
-        return self.__quit_button
     def getButtonGroup(self):
         return self.__button_group
     def getIsRunning(self):
@@ -60,16 +50,22 @@ class StartMenu:
     # Setters
     def setScreen(self, screen):
         self.__screen = screen
-    def setStartButton(self, start_button):
-        self.__start_button = start_button
-    def setQuitButton(self, quit_button):
-        self.__quit_button = quit_button
     def setButtonGroup(self, button_group):
         self.__button_group = button_group
     def setIsRunning(self, is_running):
         self.__is_running = is_running
     def setOutput(self, output):
         self.__output = output
+    
+    def initialiseButtons(self):
+        """
+        Creates Start button and Quit Button and adds them to button_group
+        TODO Make it new game button, load game button (if save file exists), and quit button
+        """
+        start_button = Button(pygame.image.load(GAME_ASSETS['start_button']).convert(), 'start', (600, 300)),
+        quit_button = Button(pygame.image.load(GAME_ASSETS['exit_button']).convert(), 'quit', (600, 600)),
+        self.getButtonGroup().add(start_button) # adds start button to button group
+        self.getButtonGroup().add(quit_button) # adds quit button to button group
 
     # Methods
     def run(self):
@@ -91,6 +87,7 @@ class StartMenu:
                             self.setOutput(buttons_pressed[0].getOutput()) # Sets output to the output of the button clicked.
                             self.setIsRunning(False) # Stops menu since button has been pressed
                         # TODO handling for if there are more than one buttons pressed:
+                        # TODO make this code better - it's very conditional at the point.
 
             self.getScreen().fill((255, 255, 255))
             for button in self.getButtonGroup():
