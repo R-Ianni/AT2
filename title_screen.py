@@ -5,18 +5,18 @@ from button import Button
 # TODO Make an automatic positioning system for buttons, when new game/load game added.
 
 
-class StartMenu:
+class TitleScreen:
     """
-    Class that represents the start menu.
+    Class that represents the title screen menu.
 
     Attributes:
         screen (pygame.display): Display on which all objects are blitted.
         button_group (pygame.sprite.Group): Group that contains start_button and quit_button
-        is_running (bool): Represents if the startmenu loop is running
+        is_running (bool): Represents if the TitleScreen loop is running
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
             ['start' -> run GameMenu, 'quit' -> end game loop]
 
-    Constructor: (screen, start_button, quit_button, button_group, is_running)
+    Constructor: (screen, button_group, is_running)
             
     Methods:
         initialiseButtons(self): Creates start, quit buttons and adds them to button_group 

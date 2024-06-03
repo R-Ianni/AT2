@@ -2,6 +2,9 @@ import pygame
 import random
 
 class Npc:
+    """
+    TODO get this sorted
+    """
     # Attributes
     __surf = None
     __rect = None
@@ -9,7 +12,7 @@ class Npc:
     __dialogue = None
 
     # Constructor
-    def __init__(self, surf, rect, name, dialogue):
+    def __init__(self, surf, name, dialogue):
         self.setSurf(surf)
         self.setRect(rect)
         self.setName(name)
