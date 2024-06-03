@@ -14,7 +14,7 @@ class Npc:
     # Constructor
     def __init__(self, surf, name, dialogue):
         self.setSurf(surf)
-        self.setRect(rect)
+        self.setRect(self.getSurf.get_rect())
         self.setName(name)
         self.setDialogue(dialogue)
 

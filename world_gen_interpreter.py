@@ -82,7 +82,6 @@ class WorldGenInterpreter:
         """
         Finds 12x12 level code in file and returns a list of tuples of form: (tile_code, xcoord, ycoord)
         """
-        tile_info = list()
         str_to_find = '!!' + self.getLevelName() # !!{level_name} - marker line for world gen code
         with open(self.getWorldGenFile(), 'r') as world_gen_file:
             file_lines = world_gen_file.readlines()
@@ -92,13 +91,8 @@ class WorldGenInterpreter:
 
                     # level_code_lines is a list of 12 lines representing each row of tile code
                     level_code_lines = [file_lines[starting_pos + i] for i in range(12)]
-
                     # tile_info is a list containing 144 tuples representing tile information
-                    # TODO fix listcomp: should result in list of tuples, not matrix of tuples
-                    #tile_info = [(tile_code, xcoord, ycoord) for ycoord, tile_code in enumerate(code_line.split()) for xcoord, code_line in enumerate(level_code_lines)]
-                    for xcoord, line in enumerate(level_code_lines):
-                        for ycoord, tile_code in enumerate(line.split()):
-                            tile_info.append((tile_code, xcoord, ycoord))
+                    tile_info = [(tile_code, xcoord, ycoord) for xcoord, code_line in enumerate(level_code_lines) for ycoord, tile_code in enumerate(code_line.split())]
                     return tile_info
 
     def parseEntityInfo(self, entity_type, entity_id):
