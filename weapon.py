@@ -1,6 +1,6 @@
 import pygame 
 
-class Weapon:
+class Weapon(pygame.sprite.Sprite): 
     """
     A class representing a weapon.
 
@@ -9,9 +9,12 @@ class Weapon:
         rect (pygame.Rect): The weapon surface's rectangle
         name (str): The name of the weapon
         attacks (list): The list of attacks the weapon has
+        TODO the rest of stuff
+
+    Constructor: TODO
 
     Methods:
-        __init__(self, window): Initializes the Weapon object.
+    TODO
     """
     
     # Attributes
@@ -22,6 +25,7 @@ class Weapon:
 
     # Constructor
     def __init__(self, surf, rect, name, attacks):
+        super().__init__()
         self.setSurf(surf)
         self.setRect(rect)
         self.setName(name)

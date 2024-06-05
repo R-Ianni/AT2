@@ -2,7 +2,9 @@ import pygame
 
 class Button(pygame.sprite.Sprite):
     """
-    Class for a generalised button.
+    Class for a generalised button
+    TO USE: if event.type == pygame.MOUSEBUTTONDOWN, and event.button == 1, then return output
+    
     Attributes:
         surf (pygame.image): Surface for the button.
         rect (pygame.Rect): Rectangle underlying the button.

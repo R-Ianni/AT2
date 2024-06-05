@@ -1,18 +1,20 @@
 import pygame
 from assets import GAME_ASSETS
 from pygame.locals import *
-# TODO make text file coordinate interpreter of worlds. I want a world system that is a board. Battle can just happen randomly during them.
+from world_gen_interpreter import WorldGenInterpreter
+
+# TODO create separate classes for all the different states.
 # TODO make it so you actually can't go backwards once you have started a dungeon to make loading easier.
 class GameWorld:
     """
     Class representing the game world
     Attributes:
         screen (pygame.display): Pygame display.
-        world_gen_file (str): File that contains the initial tile positions for a backdrop (also needs to track npcs, enemy initial positions)
-        state (str): Represents state GameWorld is in: [explore, battle, attack_menu, narrator, interaction, game_menu] TODO skill_menu, etc.
-        turn_tracker (str): During battle, tracks whether it is user_turn or enemy_turn.
+        world_gen_file (str): File that contains the initial code to initialise a level.
+        state (str): Represents state GameWorld is in: [init_level, explore, battle, attack_menu, narrator, interaction, game_menu] TODO skill_menu, etc.
         is_running (bool): Whether the GameWorld loop is to keep running or finished.
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
+        current_level (str): Represents current level name.
             ['startmenu' -> exit and run StartMenu, 'quit' -> end game loop]
         
         character (Character): Character object controlled by player
@@ -20,7 +22,6 @@ class GameWorld:
         tile_group (pygame.sprite.Group): Group containing all tile sprites
         npc_group (pygame.sprite.Group): Group containing all npc sprites
         enemy_group (pygame.sprite.Group): Group containing all enemy sprites
-        
 
     Constructor: (screen, world_gen_file, state, is_running, output, character, all_sprites, tile_group, npc_group, enemy_group)
 
@@ -29,6 +30,7 @@ class GameWorld:
         handleExplore(self): Handles state where character is moving and not in battle
         handleBattle(self): Handles state where character is in battle with enemies
         handleMenu(self, menu_type): 
+        handleDisplay(self)
         run(): Game loop for game world
 
     """
@@ -103,6 +105,9 @@ class GameWorld:
     def setEnemyGroup(self, enemy_group):
         self.__enemy_group = enemy_group
 
+    def initialiseLevel(self):
+        foobar = WorldGenInterpreter()
+
     def handleExplore(self):
         pass
     
@@ -121,7 +126,16 @@ class GameWorld:
     def interpretButton(self):
         pass
 
-    
+    def handleDisplay(self):
+        """
+        Blits all objects onto the screen, and flips display
+        """
+        self.getScreen().fill((255, 255, 255)) # fills screen with white - overrides previous iteration's blits.
+        for object in self.getAllSprites():
+            self.getScreen().blit(object.getSurf(), object.getRect()) # blits all objects onto screen
+
+        pygame.display.flip() # updates pygame display
+
 
     # Methods
     def run(self):
@@ -135,6 +149,7 @@ class GameWorld:
                 for event in pygame.event.get(): 
                     if event.type == QUIT:
                         self.setIsRunning(False)
+                self.handleExplore
             
         return self.getOutput()
 

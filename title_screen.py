@@ -4,7 +4,6 @@ from assets import GAME_ASSETS
 from button import Button
 # TODO Make an automatic positioning system for buttons, when new game/load game added.
 
-
 class TitleScreen:
     """
     Class that represents the title screen menu.
@@ -20,8 +19,9 @@ class TitleScreen:
             
     Methods:
         initialiseButtons(self): Creates start, quit buttons and adds them to button_group 
-        run(self): runs start menu loop
-            Returns 'quit' if game is to quit, returns 'start' if game is to start.
+        handleDisplay(self): Blits all buttons onto the screen, and flips display.
+        run(self): runs start menu loop. Returns output
+
     """
 
     # Attributes
@@ -56,7 +56,9 @@ class TitleScreen:
         self.__is_running = is_running
     def setOutput(self, output):
         self.__output = output
-    
+
+
+    # Methods
     def initialiseButtons(self):
         """
         Creates Start button and Quit Button and adds them to button_group
@@ -67,7 +69,18 @@ class TitleScreen:
         self.getButtonGroup().add(start_button) # adds start button to button group
         self.getButtonGroup().add(quit_button) # adds quit button to button group
 
-    # Methods
+
+    def handleDisplay(self):
+        """
+        Blits all buttons onto the screen, and flips display.
+        """
+        self.getScreen().fill((255, 255, 255)) # fills screen with white - overrides previous iteration's blits.
+        for button in self.getButtonGroup():
+            self.getScreen().blit(button.getSurf(), button.getRect()) # blits all buttons onto screen
+
+        pygame.display.flip() # updates pygame display
+                
+
     def run(self):
         """
         Runs game loop for menu class.
@@ -89,10 +102,6 @@ class TitleScreen:
                         # TODO handling for if there are more than one buttons pressed:
                         # TODO make this code better - it's very conditional at the point.
 
-            self.getScreen().fill((255, 255, 255))
-            for button in self.getButtonGroup():
-                self.getScreen().blit(button.getSurf(), button.getRect())
-
-            pygame.display.flip() # updates pygame display
+            self.handleDisplay()
             
         return self.getOutput() # Returns 'quit' if pygame is to quit, and 'start' if start button pressed.

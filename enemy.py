@@ -7,16 +7,16 @@ class Enemy(Entity):
     Class representing an enemy
 
     Attributes:
-        movement_pattern (str):
-        xp_yield (int):
-        gold_yield (int):
+        movement_pattern (str): Represents the algorithm to be used for 
+        xp_yield (int): Represents how much xp is earned through defeating enemy
+        gold_yield (int): Represents how much gold is earned through defeating enemy
     
-    Constructor: (surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord, movement_pattern, xp_yield, gold_yield)
+    Constructor: (surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, movement_pattern, xp_yield, gold_yield)
     
     Methods:
+    calcMovement(self, user_position): Returns a tuple (xcoord, ycoord) representing the square enemy will move to.
 
-
-    getInfo(self): Returns info
+    getInfo(self): Returns info of enemy
     """
 
     # Attributes
@@ -24,9 +24,9 @@ class Enemy(Entity):
     __xp_yield = None
     __gold_yield = None
 
-    # Constructor
-    def __init__(self, surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord, movement_pattern, xp_yield, gold_yield):
-        super().__init(surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord)
+    # Constructor surf, name, attack, defence, hit_points, max_health, weapon, is_alive, xcoord, ycoord
+    def __init__(self, surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, movement_pattern, xp_yield, gold_yield):
+        super().__init__(surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
         self.setMovementPattern(movement_pattern)
         self.setXpYield(xp_yield)
         self.setGoldYield(gold_yield)
@@ -47,3 +47,6 @@ class Enemy(Entity):
     def setGoldYield(self, gold_yield):
         self.__gold_yield = gold_yield
 
+    # Methods
+    def getInfo(self):
+        pass

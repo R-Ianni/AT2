@@ -1,7 +1,6 @@
 import pygame
 from title_screen import TitleScreen
 from game_world import GameWorld
-from button import Button
 from assets import load_assets, GAME_ASSETS
 from pygame.locals import *
 from character import Character
@@ -10,10 +9,6 @@ load_assets()
 
 # Constants
 SCREEN = pygame.display.set_mode((1200, 800))
-
-# TODO Ask sir whether it is necessary to have attributes representing the different classes that are to be used
-# Else, instead since stuff is called a single time each, do we really need the objects to be put under attributes for good coding practice.
-# IMPORTANT
 
 class Game:
     """
@@ -29,7 +24,7 @@ class Game:
     Methods:
         handleTitleScreen(self): If state == 'title_screen', runs TitleScreen and changes state accordingly.
         handleGameWorld(self): If state == 'game_world', runs GameWorld and changes state accordingly.
-        onCleanup(self): When game loop is exited, quits pygame. TODO save system.
+        handleCleanup(self): When game loop is exited, quits pygame. TODO save system.
         run(self): Runs the game main loop
     """
 
@@ -92,7 +87,7 @@ class Game:
             self.setIsRunning(False)
     
 
-    def onCleanup(self):
+    def handleCleanup(self):
         """
         Runs when game loop ends - is_running == False. Quits pygame.
         TODO make this save game
@@ -115,7 +110,7 @@ class Game:
             elif self.getState() == 'game_world':  # If the state is 'game_world'
                 self.handleGameWorld()
 
-        self.onCleanup() # Runs cleanup, TODO save game.
+        self.handleCleanup() # Runs cleanup, TODO save game.
 
 if __name__ == "__main__":
     game = Game(SCREEN, 'title_screen', True)

@@ -1,9 +1,22 @@
 import pygame
 from enemy import Enemy
 from npc import Npc
+from assets import GAME_ASSETS, load_assets # remove load_assets later # TODO
+load_assets()
 
-# TODO Make it return not tile, but rather a tuple representing tile colour, tile x coord and tile y coord
 # TODO In GameWorld, we can blit all the tiles onto a background surface first, then just blit the background surface whenever it updates.
+# TODO make separate classes for different file interpreters: enemy_id_interpreter, etc. This is more modular structure. All of them can be in the same file
+# TODO Ask sir: whether the method arguments should be part of the class attributes, or just be arguments. Applies to all of the classes within here.
+# name it level gen interpreter i think
+class EnemyIdInterpreter:
+    pass
+
+class NpcIdInterpreter:
+    pass
+
+class WeaponIdInterpreter:
+    pass
+
 class WorldGenInterpreter:
     """
     Class that gives backdrop info by interpreting worldgenerator.txt, and returns a group of tiles, enemies and npcs.
@@ -26,6 +39,7 @@ class WorldGenInterpreter:
         addEntityToGroup(self, tile_code): Adds tile to tile_list, and any additional entities to their respective groups
         translateLevelCode(self): Main function which carries out the translation of level code, and adds objects to tile_list, enemy_group, npc_group
     """
+    
 
     # Attributes
     __world_gen_file = None
@@ -37,7 +51,7 @@ class WorldGenInterpreter:
     __npc_group = None
 
     # Constructor
-    def __init__(self, world_gen_file, enemy_id_file, npc_id_file, level_name, tile_list=list(), enemy_group=pygame.sprite.Group, npc_group=pygame.sprite.Group):
+    def __init__(self, world_gen_file, enemy_id_file, npc_id_file, level_name, tile_list=list(), enemy_group=pygame.sprite.Group(), npc_group=pygame.sprite.Group()):
         self.setWorldGenFile(world_gen_file)
         self.setEnemyIdFile(enemy_id_file)
         self.setNpcIdFile(npc_id_file)
@@ -108,7 +122,7 @@ class WorldGenInterpreter:
                 for line in file_lines:
                     if str_to_find in line: # if line contains enemy id
                         enemy_info = [i for i in line.split('~')[1].split('/')] # Enemy information split into a list:
-            return enemy_info # [surf, name, attack, defence, max_health, weapon, movement_pattern, xp_yield, gold_yield]
+            return enemy_info # [surf, name, attack, defence, health, weapon, movement_pattern, xp_yield, gold_yield]
 
         elif entity_type == "N":
             with open(self.getNpcIdFile, 'r') as npc_file:
@@ -129,7 +143,7 @@ class WorldGenInterpreter:
 
         tile_code = tile_info[0].split('_') # [tile_type, entity_type, entity_id] code in world_gen_file
         tile_type, entity_type, entity_id = tile_code[0], tile_code[1], tile_code[2]
-        xcoord, ycoord = tile_info[1], tile_info[2] # coordinates of tile
+        xcoord, ycoord = int(tile_info[1]), int(tile_info[2]) # coordinates of tile
 
         # Adding tile to tile_list
         if tile_type == 'G':
@@ -141,13 +155,13 @@ class WorldGenInterpreter:
         if entity_type != '0' and entity_id != '00':
             entity_info = self.parseEntityInfo(entity_type, entity_id) # list containing necessary parameters for the entity
             if entity_type == 'E': # entity is an enemy with constructor:
-                # (surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord, movement_pattern, xp_yield, gold_yield)
+                # (surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, movement_pattern, xp_yield, gold_yield)
                 # creates enemy object using the attributes from entity_info: found in enemy_id_file
-                new_enemy = Enemy(entity_info[0], entity_info[1], entity_info[2], entity_info[3], entity_info[4], entity_info[4], entity_info[5], xcoord, ycoord, entity_info[6], entity_info[7], entity_info[8]) 
+                new_enemy = Enemy(pygame.image.load(GAME_ASSETS[entity_info[0]]), entity_info[1], int(entity_info[2]), int(entity_info[3]), int(entity_info[4]), int(entity_info[4]), entity_info[5], True, xcoord, ycoord, entity_info[6], int(entity_info[7]), int(entity_info[8])) 
                 self.getEnemyGroup().add(new_enemy) # adds new enemy to enemy_group
 
             elif entity_type == 'N': # entity is an npc with constructor: (surf, name, dialogue)
-                new_npc = Npc(entity_info[0], entity_info[1], entity_info[2])
+                new_npc = Npc(pygame.image.load(GAME_ASSETS[entity_info[0]]), entity_info[1], entity_info[2])
                 self.getNpcGroup.add(new_npc)
                     
 
@@ -164,4 +178,4 @@ class WorldGenInterpreter:
         
 new = WorldGenInterpreter('gameinfostorage/world_gen.txt', 'gameinfostorage/enemy_id.txt', 'gameinfostorage/npc_id.txt', 'Music Centre 1')
 new.translateLevelCode()
-print(new.getEnemyGroup().sprites)
+print(new.getTileList()) # TODO remove these testing thingys.

@@ -18,7 +18,7 @@ class Character(Entity):
         TODO items (list: Items) List of items the character has 
         TODO gold (int): Amount of gold character has 
 
-    Constructor: (surf, name, attack, defence, level, hit_points, max_health, weapon, xcoord, ycoord, experience_points, skills, items, gold)
+    Constructor: (surf, name, attack, defence, level, max_health, hit_points, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
 
     Methods:
         gainExperience(self, experience): Increases experience, and if possible levels up.
@@ -26,6 +26,7 @@ class Character(Entity):
         calcRequiredExperience(self): Calculates total required experience for the next level.
         takeDamage(self, damage): Changes hitpoints according to defence and damage.
         TODO updatePosition(self, pressed_keys):
+        TODO getInfo
     """
     
     # Attributes
@@ -37,8 +38,8 @@ class Character(Entity):
     __gold = None
 
     # Constructor
-    def __init__(self, surf, name, attack, defence, level, hit_points, max_health, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold):
-        super().__init__(surf, name, attack, defence, hit_points, max_health, weapon, is_alive, xcoord, ycoord) 
+    def __init__(self, surf, name, attack, defence, level, max_health, hit_points, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold):
+        super().__init__(surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord) 
         self.setLevel(level)
         self.setExperiencePoints(experience_points)
         self.setSkills(skills)

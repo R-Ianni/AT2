@@ -1,7 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 
-class Entity(ABC):
+class Entity(pygame.sprite.Sprite, ABC):
     """
     Generalised abstract class that represents a character or an enemy
     Attributes:
@@ -10,17 +10,17 @@ class Entity(ABC):
         name (str): Name of character
         attack (int): Attack stat
         defence (int): Defence stat
-        hit_points (int): Current hit points stat
         max_health (int): Maximum hit points stat
+        hit_points (int): Current hit points stat
         weapon (Weapon): Currently held weapon
         is_alive (bool): Whether entity's is alive: hitpoints above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
     
-    Constructor: (surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord)
+    Constructor: (surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
 
     Methods:
-        getInfo(self) abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
+        getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes hitpoints according to defence and damage.
 
     """
@@ -40,14 +40,15 @@ class Entity(ABC):
     __ycoord = None
 
     # Constructor
-    def __init__(self, surf, name, attack, defence, hit_points, max_health, weapon, is_alive, xcoord, ycoord):
+    def __init__(self, surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord):
+        super().__init__()
         self.setSurf(surf)
         self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setAttack(attack)
         self.setDefence(defence)
-        self.setHitPoints(hit_points)
         self.setMaxHealth(max_health)
+        self.setHitPoints(hit_points)
         self.setWeapon(weapon)
         self.setIsAlive(is_alive)
         self.setXcoord(xcoord)
@@ -64,10 +65,10 @@ class Entity(ABC):
         return self.__attack
     def getDefence(self):
         return self.__defence
-    def getHitPoints(self):
-        return self.__hit_points
     def getMaxHealth(self):
         return self.__max_health
+    def getHitPoints(self):
+        return self.__hit_points
     def getWeapon(self):
         return self.__weapon
     def getIsAlive(self):
@@ -91,6 +92,11 @@ class Entity(ABC):
             self.__defence = 0
         else:
             self.__defence = defence
+    def setMaxHealth(self, max_health):
+        if max_health <= 0: # makes sure max_health > 0
+            self.setMaxHealth(1)
+        else:
+            self.__max_health = max_health
     def setHitPoints(self, hit_points):
         max_health = self.getMaxHealth() 
         if hit_points > max_health: # ensures 0 <= hit_points <= max_health
@@ -100,11 +106,6 @@ class Entity(ABC):
             self.setIsAlive(False)
         else:
             self.__hit_points = hit_points
-    def setMaxHealth(self, max_health):
-        if max_health <= 0: # makes sure max_health > 0
-            self.setMaxHealth(1)
-        else:
-            self.__max_health = max_health
     def setWeapon(self, weapon):
         self.__weapon = weapon
     def setIsAlive(self, is_alive):

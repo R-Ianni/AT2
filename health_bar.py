@@ -2,6 +2,10 @@ import pygame
 from assets import GAME_ASSETS
 
 class HealthBar:
+    """
+    TODO
+    """
+
     # Attributes
     __surf = None
     __rect = None
