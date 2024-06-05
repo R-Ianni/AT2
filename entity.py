@@ -13,14 +13,14 @@ class Entity(ABC):
         hit_points (int): Current hit points stat
         max_health (int): Maximum hit points stat
         weapon (Weapon): Currently held weapon
-        is_alive (bool): Whether entity's is alive: hitpoints above 0 or not.
+        is_alive (bool): Whether entity's is alive: hitpoints above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
     
     Constructor: (surf, name, attack, defence, hit_points, max_health, weapon, xcoord, ycoord)
 
     Methods:
-        getInfo(self) abstractmethod: Returns the info of entity for saving.
+        getInfo(self) abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes hitpoints according to defence and damage.
 
     """
@@ -87,7 +87,10 @@ class Entity(ABC):
     def setAttack(self, attack):
         self.__attack = attack
     def setDefence(self, defence):
-        self.__defence = defence
+        if defence < 0:
+            self.__defence = 0
+        else:
+            self.__defence = defence
     def setHitPoints(self, hit_points):
         max_health = self.getMaxHealth() 
         if hit_points > max_health: # ensures 0 <= hit_points <= max_health

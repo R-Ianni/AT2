@@ -3,5 +3,5 @@ Double exclamation mark (!!) marks the ID of enemy, e.g. !!00
 Enemy object information is found on same line, in format:
 {surf}/{name}/{dialogue}
 
-!!Bo bob/Bob/hi i am bob
-!!Is ishaan/Ishaan/help i am ishaan
+!!Bo~bob/Bob/hi i am bob
+!!Is~ishaan/Ishaan/help i am ishaan

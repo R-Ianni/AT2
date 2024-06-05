@@ -1,8 +1,9 @@
 Interpretation of file:
 Double exclamation mark (!!) marks the ID of enemy, e.g. !!00
+ID is separated from enemy object information by tilde (~)
 Enemy object information is found on same line, in format:
 {surf}/{name}/{attack}/{defence}/{max_health}/{weapon}/{movement_pattern}/{xp_yield}/{gold_yield}
 
-!!G1 goblin/Goblin/10/10/50/foo/direct/50/10
-!!O1 orc/Orc/30/5/25/foo/direct/50/10
-!!VP violin_player/Violin Player/5/20/60/foo/still/30/20
+!!G1~goblin/Goblin/10/10/50/foo/direct/50/10
+!!O1~orc/Orc/30/5/25/foo/direct/50/10
+!!VP~violin_player/Violin Player/5/20/60/foo/still/30/20
