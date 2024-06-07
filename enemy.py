@@ -4,7 +4,7 @@ from entity import Entity
 
 class Enemy(Entity):
     """
-    Class representing an enemy
+    Class representing an enemy sprite
 
     Attributes:
         movement_pattern (str): Represents the algorithm to be used for 
@@ -14,9 +14,9 @@ class Enemy(Entity):
     Constructor: (surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, movement_pattern, xp_yield, gold_yield)
     
     Methods:
-    calcMovement(self, user_position): Returns a tuple (xcoord, ycoord) representing the square enemy will move to.
+        calcMovement(self, user_position): Returns a tuple (xcoord, ycoord) representing the square enemy will move to.
 
-    getInfo(self): Returns info of enemy
+        getInfo(self): Returns info of enemy
     """
 
     # Attributes
@@ -26,6 +26,13 @@ class Enemy(Entity):
 
     # Constructor surf, name, attack, defence, hit_points, max_health, weapon, is_alive, xcoord, ycoord
     def __init__(self, surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, movement_pattern, xp_yield, gold_yield):
+        with open(self.getEnemyIdFile(), 'r') as enemy_file:
+                str_to_find = '!!' + entity_id
+                file_lines = enemy_file.readlines()
+                for line in file_lines:
+                    if str_to_find in line: # if line contains enemy id
+                        enemy_info = [i for i in line.split('~')[1].split('/')] # Enemy information split into a list: [surf, name, attack, defence, health, weapon, movement_pattern, xp_yield, gold_yield]
+        
         super().__init__(surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
         self.setMovementPattern(movement_pattern)
         self.setXpYield(xp_yield)

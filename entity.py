@@ -1,12 +1,15 @@
 import pygame
+from weapon import Weapon
+from health_bar import Healthbar
 from abc import ABC, abstractmethod
 
 class Entity(pygame.sprite.Sprite, ABC):
     """
-    Generalised abstract class that represents a character or an enemy
+    Generalised abstract class that represents a character or an enemy sprite
     Attributes:
-        surf (pygame.image): Pygame surface image for the entity
-        rect (pygame.Rect): Rectangle representing entity surface position
+        surf (pygame.Surface): Pygame surface for the entity, onto which to blit the image, weapon and healthbar - 64x64 transparent square
+        image (pygame.image): Entity's sprite image
+        rect (pygame.Rect): Rectangle representing entity Surface position
         name (str): Name of character
         attack (int): Attack stat
         defence (int): Defence stat
@@ -16,8 +19,9 @@ class Entity(pygame.sprite.Sprite, ABC):
         is_alive (bool): Whether entity's is alive: hitpoints above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
+        healthbar (Healthbar): Healthbar of entity
     
-    Constructor: (surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
+    Constructor: (image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
 
     Methods:
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.

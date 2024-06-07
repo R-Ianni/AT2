@@ -1,9 +1,25 @@
 import pygame
 from assets import GAME_ASSETS
 
-class HealthBar:
+class Healthbar:
     """
-    TODO
+    Class representing a healthbar sprite
+
+    Attributes:
+
+        surf (pygame.Surface): Represents
+        rect (pygame.Rect): Position of 
+
+        entity_health (int): TODO
+        entity_max_hp (int):
+        entity_xcoord (int):
+        entity_ycoord (int):
+
+    Constructor: TODO
+
+    Methods:
+        update(self): To be called whenever entity moves or its health changes. Updates healthbar position and health indicator.
+
     """
 
     # Attributes

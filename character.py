@@ -8,7 +8,7 @@ from assets import GAME_ASSETS
     
 class Character(Entity):
     """
-    A class representing a character
+    Class representing a character sprite
 
     Attributes:
         MAX_LEVEL (int): Maximum level of character

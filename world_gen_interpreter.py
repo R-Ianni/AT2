@@ -115,16 +115,8 @@ class WorldGenInterpreter:
         Inputs entity_type (npc: N, or enemy: E), entity_id. 
         Uses enemy_id_file and npc_id_file to get corresponding entity, the info of which it returns as a list
         """
-        if entity_type == "E":
-            with open(self.getEnemyIdFile(), 'r') as enemy_file:
-                str_to_find = '!!' + entity_id
-                file_lines = enemy_file.readlines()
-                for line in file_lines:
-                    if str_to_find in line: # if line contains enemy id
-                        enemy_info = [i for i in line.split('~')[1].split('/')] # Enemy information split into a list:
-            return enemy_info # [surf, name, attack, defence, health, weapon, movement_pattern, xp_yield, gold_yield]
 
-        elif entity_type == "N":
+        if entity_type == "N":
             with open(self.getNpcIdFile, 'r') as npc_file:
                 str_to_find = '!!' + entity_id
                 file_lines = npc_file.readlines()
@@ -175,7 +167,3 @@ class WorldGenInterpreter:
         # tile_info is a tuple: (tile_code, xcoord, ycoord)
         for tile_info in level_code: # runs through all tiles in level_code
             self.addEntityToGroup(tile_info) # adds each tile and entities on it to their respective sprite groups.
-        
-new = WorldGenInterpreter('gameinfostorage/world_gen.txt', 'gameinfostorage/enemy_id.txt', 'gameinfostorage/npc_id.txt', 'Music Centre 1')
-new.translateLevelCode()
-print(new.getTileList()) # TODO remove these testing thingys.
