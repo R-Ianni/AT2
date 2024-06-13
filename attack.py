@@ -1,3 +1,4 @@
+from file_id_interpreter import FileIdInterpreter
 
 class Attack:
     """
@@ -24,21 +25,10 @@ class Attack:
 
     # Constructor
     def __init__(self, attack_id):
-        # Interpreting file with attack_id to get attack_info
-        with open('gameinfostorage/attack_id.txt', 'r') as attack_file:
-                str_to_find = '!!' + attack_id # !!{ID} marker
-                file_lines = attack_file.readlines()
-                for line in file_lines:
-                    if str_to_find in line: # if line contains attack id
-                        attack_info = [i for i in line.split('~')[1].split('/')] # Attack information split into a list: [image, name, ]
-                        break
-        
-        try: # error handling if attack_info does not exist
-            bool(attack_info)
-        except:
-            raise Exception(f"No attack with ID {attack_id} found, or attack file info corrupted")
-
-        name, power, accuracy, range, cooldown = attack_info # unpacks all attack information
+        # Getting and unpacking file info
+        file_interpreter = FileIdInterpreter('gameinfostorage/attack_id.txt', attack_id)
+        attribute_list = file_interpreter.interpretFileInfo() # [name, power, accuracy, range, cooldown]
+        name, power, accuracy, range, cooldown = attribute_list # unpacks attribute_list
         
         # Initialising attack object.
         self.setName(name)
@@ -47,7 +37,7 @@ class Attack:
         self.setRange(range)
         self.setCooldown(cooldown)
         
-
+        
     # Getters
     def getName(self):
         return self.__name

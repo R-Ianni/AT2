@@ -1,11 +1,9 @@
 import pygame
-from weapon import Weapon
-from healthbar import Healthbar
 from abc import ABC, abstractmethod
 
-class Entity(pygame.sprite.Sprite, ABC):
+class ActiveEntity(pygame.sprite.Sprite, ABC):
     """
-    Generalised abstract class that represents a character or an enemy sprite
+    Abstract class that represents a character or an enemy sprite - moving/battling sprites
     Attributes:
         surf (pygame.Surface): Pygame surface for the entity, onto which to blit the entity image, weapon and healthbar - 64x64 transparent square
         image (pygame.image): Entity's sprite image

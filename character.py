@@ -1,10 +1,10 @@
 import pygame
-from entity import Entity
+from active_entity import ActiveEntity
 from pygame.locals import *
 from assets import GAME_ASSETS
 
 
-class Character(Entity):
+class Character(ActiveEntity):
     """
     Class representing a character sprite
 

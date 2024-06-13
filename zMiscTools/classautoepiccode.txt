@@ -1,50 +1,20 @@
 # Attributes
-__surf = None
-__image = None
-__rect = None
-__name = None
-__dialogue = None
-__xcoord = None
-__ycoord = None
+__file_name = None
+__id = None
 
 # Constructor
-def __init__(self, surf, image, rect, name, dialogue, xcoord, ycoord):
-    self.setSurf(surf)
-    self.setImage(image)
-    self.setRect(rect)
-    self.setName(name)
-    self.setDialogue(dialogue)
-    self.setXcoord(xcoord)
-    self.setYcoord(ycoord)
+def __init__(self, file_name, id):
+    self.setFileName(file_name)
+    self.setId(id)
 
 # Getters
-def getSurf(self):
-    return self.__surf
-def getImage(self):
-    return self.__image
-def getRect(self):
-    return self.__rect
-def getName(self):
-    return self.__name
-def getDialogue(self):
-    return self.__dialogue
-def getXcoord(self):
-    return self.__xcoord
-def getYcoord(self):
-    return self.__ycoord
+def getFileName(self):
+    return self.__file_name
+def getId(self):
+    return self.__id
 
 # Setters
-def setSurf(self, surf):
-    self.__surf = surf
-def setImage(self, image):
-    self.__image = image
-def setRect(self, rect):
-    self.__rect = rect
-def setName(self, name):
-    self.__name = name
-def setDialogue(self, dialogue):
-    self.__dialogue = dialogue
-def setXcoord(self, xcoord):
-    self.__xcoord = xcoord
-def setYcoord(self, ycoord):
-    self.__ycoord = ycoord
+def setFileName(self, file_name):
+    self.__file_name = file_name
+def setId(self, id):
+    self.__id = id

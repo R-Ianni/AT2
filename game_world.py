@@ -1,7 +1,6 @@
 import pygame
 from assets import GAME_ASSETS
 from pygame.locals import *
-from world_gen_interpreter import WorldGenInterpreter
 from enemy import Enemy
 from npc import Npc
 
@@ -14,16 +13,14 @@ class GameWorld:
         screen (pygame.display): Pygame display.
         state (str): Represents state GameWorld is in: [init_level, explore, battle, attack_menu, narrator, interaction, game_menu] TODO skill_menu, etc.
         is_running (bool): Whether the GameWorld loop is to keep running or finished.
-        character (Character): Character object controlled by player
-        current_level (str): Represents current level name.
-        level_surface (pygame.Surface): Pygame surface that has all tiles on it.
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
             ['startmenu' -> exit and run StartMenu, 'quit' -> end game loop]
         
-        all_sprites (pygame.sprite.Group): Pygame group containing all sprites [tiles, character, enemies, npcs]
-        tile_group (pygame.sprite.Group): Group containing all tile sprites
-        npc_group (pygame.sprite.Group): Group containing all npc sprites
-        enemy_group (pygame.sprite.Group): Group containing all enemy sprites
+        character (Character): Character object controlled by player
+        world_tiles object? Think we need to track this TODO Maybe need an attribute for every object.
+
+        # TODO fix attributes, from top-down view. Why am I working bottom up
+        
 
     Constructor: (screen, world_gen_file, state, is_running, output, character, all_sprites, tile_group, npc_group, enemy_group)
 
@@ -44,7 +41,7 @@ class GameWorld:
     __is_running = None
     __character = None
     __current_level = None
-    level_surface = pygame.Surface((768,768))
+    level_surface = pygame.Surface((768,768)) # TODO fix
     __output = None
     __all_sprites = None
     __tile_group = None
@@ -111,8 +108,7 @@ class GameWorld:
 
 
     def initialiseLevel(self):
-        foobar = WorldGenInterpreter()
-        # instead, i'm not gonna need worldgeninterpreter class anymore. Just make this a weapon.
+        pass #TODO
 
     def handleExplore(self):
         pass

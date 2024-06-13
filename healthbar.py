@@ -34,7 +34,7 @@ class Healthbar:
         self.setRect(self.getSurf().get_rect())
         self.setEntityHealth(entity_health)
         self.setEntityMaxHealth(entity_max_health)
-        self.setEntityPosition(entity_position)
+       # self.setEntityPosition(entity_position)
 
     # Getters
     def getSurf(self):

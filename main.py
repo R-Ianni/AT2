@@ -23,10 +23,10 @@ class Game:
     Constructor: (screen, state, is_running)
         
     Methods:
+        run(self): Runs the game main loop
         handleTitleScreen(self): If state == 'title_screen', runs TitleScreen and changes state accordingly.
         handleGameWorld(self): If state == 'game_world', runs GameWorld and changes state accordingly.
         handleCleanup(self): When game loop is exited, quits pygame. TODO save system.
-        run(self): Runs the game main loop
     """
 
     # Attributes
@@ -59,6 +59,25 @@ class Game:
         self.__is_running = is_running
 
     # Methods
+
+    def run(self):
+        """
+        Runs the game loop
+        """
+        while self.getIsRunning() == True:
+            # Event handler for QUIT
+            for event in pygame.event.get(): 
+                if event.type == QUIT:
+                    self.setIsRunning(False)
+
+            if self.getState() == 'title_screen':  # If the state is 'title_screen'
+                self.handleTitleScreen()
+
+            elif self.getState() == 'game_world':  # If the state is 'game_world'
+                self.handleGameWorld()
+
+        self.handleCleanup() # Runs cleanup, TODO save game.
+
 
     def handleTitleScreen(self):
         """
@@ -96,24 +115,6 @@ class Game:
         TODO make this save game
         """
         pygame.quit()
-
-    def run(self):
-        """
-        Runs the game loop
-        """
-        while self.getIsRunning() == True:
-            # Event handler for QUIT
-            for event in pygame.event.get(): 
-                if event.type == QUIT:
-                    self.setIsRunning(False)
-
-            if self.getState() == 'title_screen':  # If the state is 'title_screen'
-                self.handleTitleScreen()
-
-            elif self.getState() == 'game_world':  # If the state is 'game_world'
-                self.handleGameWorld()
-
-        self.handleCleanup() # Runs cleanup, TODO save game.
 
 if __name__ == "__main__":
     game = Game(SCREEN, 'title_screen', True)

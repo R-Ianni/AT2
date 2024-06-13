@@ -3,9 +3,9 @@ Interpretation of file:
 - Double exclamation mark (!!) marks the title of the backdrop.
 - Level grid code included the line immediately after title, and forms a 12x12 array.
 - Each tile code represents: {tile}_{entity type}_{entity id}
-Tiles: {G -> grass, W -> wall}
-Entity type: {E -> enemy, N -> npc, 0 -> no entity}
-Entity id: 2 character string, {00 -> none}
+Tiles: {G: grass, W: wall}
+Entity type: {E: enemy, N: npc, P: portal, 0: no entity}
+Entity id: 2 character string, {00: none}
 If 0, 00 are detected in either entity type OR entity id respectively, then worldgeninterpreter treats it as no entity.
 
 !!Dining Hall 1
@@ -20,9 +20,9 @@ G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
-G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
+G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_P_D2
 
-!!Music Centre 1
+!!Music Centre 1 -> Music Centre 2???
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
@@ -34,7 +34,7 @@ G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
-G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00
+G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 G_0_00 P_0_00
 
 !!Turning Circle 1
 
