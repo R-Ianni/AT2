@@ -23,7 +23,7 @@ def main():
     for i in setters(construct_cap, construct_under, other_cap, other_under):
         print(i)
 
-    with open("classautoepiccode.txt", "w") as file:
+    with open("zMiscTools/classautoepiccode.txt", "w") as file:
         for i in attributeList(construct_under, other_under):
             file.write(i + "\n")
         for i in constructor(construct_cap, construct_under):

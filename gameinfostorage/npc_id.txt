@@ -1,7 +1,9 @@
 Interpretation of file:
-Double exclamation mark (!!) marks the ID of enemy, e.g. !!00
-Enemy object information is found on same line, in format:
-{surf}/{name}/{dialogue}
+Double exclamation mark (!!) marks the ID of npc, e.g. !!00
+ID is separated from npc object information by tilde (~)
+Npc object information is found on same line, separated by forward slashes (/)
+Template for npc object as below:
+!!{ID}~{image}/{name}/{dialogue}
 
 !!Bo~bob/Bob/hi i am bob
-!!Is~ishaan/Ishaan/help i am ishaan
+!!Is~ishaan/Ishaan/help mengxi is atacking me

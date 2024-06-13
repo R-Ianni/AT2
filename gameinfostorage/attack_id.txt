@@ -1,0 +1,6 @@
+Interpretation of file:
+Double exclamation mark (!!) marks the ID of attack, e.g. !!00
+ID is separated from attack object information by tilde (~)
+Attack object information is found on same line, separated by forward slashes (/)
+Template for attack object as below:
+!!{ID}~{name}/{power}/{accuracy}/{range}/

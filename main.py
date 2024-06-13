@@ -4,6 +4,7 @@ from game_world import GameWorld
 from assets import load_assets, GAME_ASSETS
 from pygame.locals import *
 from character import Character
+from healthbar import Healthbar
 
 load_assets()
 
@@ -78,8 +79,10 @@ class Game:
         Runs if state == 'game_world'. Runs GameWorld class
         Returns 'quit' if game is quit. Returns
         """
-        game_world = GameWorld(SCREEN, 'worldgenerator.txt', 'explore', True, Character(pygame.image.load(GAME_ASSETS['blue_orb']), 'Bob', 25, 25, 1, 0, 100, 100, 'sword', True, 'www', 'n', 100))
-        #TODO fix Character object init.
+        game_world = GameWorld(SCREEN, 'explore', True, 
+                               Character(pygame.Surface((64,64)), pygame.image.load(GAME_ASSETS['blue_orb']), # surface and image
+                                         'Bob', 25, 25, 100, 100, 'sword', True, 0, 0, 1, 0, list(), 0, # stats
+                                         Healthbar(pygame.Surface((64, 16)), 100, 100, 0, 0))) # healthbar object
         result = game_world.run()
         if result == 'title_screen':
             self.setState('game_menu')

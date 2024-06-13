@@ -2,6 +2,8 @@ import pygame
 from assets import GAME_ASSETS
 from pygame.locals import *
 from world_gen_interpreter import WorldGenInterpreter
+from enemy import Enemy
+from npc import Npc
 
 # TODO create separate classes for all the different states.
 # TODO make it so you actually can't go backwards once you have started a dungeon to make loading easier.
@@ -10,14 +12,14 @@ class GameWorld:
     Class representing the game world
     Attributes:
         screen (pygame.display): Pygame display.
-        world_gen_file (str): File that contains the initial code to initialise a level.
         state (str): Represents state GameWorld is in: [init_level, explore, battle, attack_menu, narrator, interaction, game_menu] TODO skill_menu, etc.
         is_running (bool): Whether the GameWorld loop is to keep running or finished.
-        output (str): Output to be returned to main once loop finished. Represents next state game will enter:
+        character (Character): Character object controlled by player
         current_level (str): Represents current level name.
+        level_surface (pygame.Surface): Pygame surface that has all tiles on it.
+        output (str): Output to be returned to main once loop finished. Represents next state game will enter:
             ['startmenu' -> exit and run StartMenu, 'quit' -> end game loop]
         
-        character (Character): Character object controlled by player
         all_sprites (pygame.sprite.Group): Pygame group containing all sprites [tiles, character, enemies, npcs]
         tile_group (pygame.sprite.Group): Group containing all tile sprites
         npc_group (pygame.sprite.Group): Group containing all npc sprites
@@ -32,48 +34,50 @@ class GameWorld:
         handleMenu(self, menu_type): 
         handleDisplay(self)
         run(): Game loop for game world
+        TODO all methods
 
     """
 
-
     # Attributes
     __screen = None
-    __world_gen_file = None
     __state = None
     __is_running = None
-    __output = None
     __character = None
+    __current_level = None
+    level_surface = pygame.Surface((768,768))
+    __output = None
     __all_sprites = None
     __tile_group = None
     __npc_group = None
     __enemy_group = None
-
+    
     # Constructor
-    def __init__(self, screen, world_gen_file, state, is_running, output, character, all_sprites=pygame.sprite.Group, tile_group=pygame.sprite.Group, npc_group=pygame.sprite.Group, enemy_group=pygame.sprite.Group):
+    def __init__(self, screen, state, is_running, character, current_level, output=None, all_sprites=pygame.sprite.Group, tile_group=pygame.sprite.Group, npc_group=pygame.sprite.Group, enemy_group=pygame.sprite.Group):
         self.setScreen(screen)
-        self.setWorldFile(world_gen_file)
         self.setState(state)
         self.setIsRunning(is_running)
-        self.setOutput(output)
         self.setCharacter(character)
+        self.setCurrentLevel(current_level)
+        self.setOutput(output)
         self.setAllSprites(all_sprites)
         self.setTileGroup(tile_group)
         self.setNpcGroup(npc_group)
         self.setEnemyGroup(enemy_group)
 
+
     # Getters
     def getScreen(self):
         return self.__screen
-    def getWorldFile(self):
-        return self.__world_gen_file
     def getState(self):
         return self.__state
     def getIsRunning(self):
         return self.__is_running
-    def getOutput(self):
-        return self.__output
     def getCharacter(self):
         return self.__character
+    def getCurrentLevel(self):
+        return self.__current_level
+    def getOutput(self):
+        return self.__output
     def getAllSprites(self):
         return self.__all_sprites
     def getTileGroup(self):
@@ -86,16 +90,16 @@ class GameWorld:
     # Setters
     def setScreen(self, screen):
         self.__screen = screen
-    def setWorldFile(self, world_gen_file):
-        self.__world_gen_file = world_gen_file
     def setState(self, state):
         self.__state = state
     def setIsRunning(self, is_running):
         self.__is_running = is_running
-    def setOutput(self, output):
-        self.__output = output
     def setCharacter(self, character):
         self.__character = character
+    def setCurrentLevel(self, current_level):
+        self.__current_level = current_level
+    def setOutput(self, output):
+        self.__output = output
     def setAllSprites(self, all_sprites):
         self.__all_sprites = all_sprites
     def setTileGroup(self, tile_group):
@@ -105,8 +109,10 @@ class GameWorld:
     def setEnemyGroup(self, enemy_group):
         self.__enemy_group = enemy_group
 
+
     def initialiseLevel(self):
         foobar = WorldGenInterpreter()
+        # instead, i'm not gonna need worldgeninterpreter class anymore. Just make this a weapon.
 
     def handleExplore(self):
         pass
@@ -149,8 +155,8 @@ class GameWorld:
                 for event in pygame.event.get(): 
                     if event.type == QUIT:
                         self.setIsRunning(False)
-                self.handleExplore
+                self.handleExplore()
             
         return self.getOutput()
 
-        # TODO use pygame.event == KEYDOWN to do stuff.
+        # TODO use pygame.event == KEYDOWN to do stuff with one movement at a time.

@@ -1,5 +1,4 @@
 import pygame
-from assets import GAME_ASSETS
 
 class Healthbar:
     """
@@ -18,8 +17,8 @@ class Healthbar:
     Constructor: TODO
 
     Methods:
-        update(self): To be called whenever entity moves or its health changes. Updates healthbar position and health indicator.
-
+        updatePosition(self): To be called whenever entity moves. Updates healthbar position.
+        updateHealth(self): To be called whenever entity health changes. Updates healthbar surface.
     """
 
     # Attributes
@@ -30,9 +29,9 @@ class Healthbar:
     __entity_position = None
 
     # Constructor
-    def __init__(self, surf, rect, entity_health, entity_max_health, entity_position):
+    def __init__(self, surf, entity_health, entity_max_health, entity_x_coord, entity_y_coord):
         self.setSurf(surf)
-        self.setRect(rect)
+        self.setRect(self.getSurf().get_rect())
         self.setEntityHealth(entity_health)
         self.setEntityMaxHealth(entity_max_health)
         self.setEntityPosition(entity_position)

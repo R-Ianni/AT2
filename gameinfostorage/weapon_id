@@ -1,0 +1,8 @@
+Interpretation of file:
+Double exclamation mark (!!) marks the ID of weapon, e.g. !!00
+ID is separated from weapon object information by tilde (~)
+Weapon object information is found on same line, separated by forward slashes (/)
+Template for weapon object as below:
+!!{ID}~{image}/{name}/{*attack_ids}
+
+!!Sw~sword/Sword/slash/chop/feint

@@ -3,9 +3,7 @@ from entity import Entity
 from pygame.locals import *
 from assets import GAME_ASSETS
 
-# Example character:
-    # Character(pygame.image.load(GAME_ASSETS['blue_orb'], 'Bob', 25, 25, 1, 0, 100, 100, 'sword', True, 'www', 'n', 100)
-    
+
 class Character(Entity):
     """
     Class representing a character sprite
@@ -13,10 +11,10 @@ class Character(Entity):
     Attributes:
         MAX_LEVEL (int): Maximum level of character
         level (int): Current level of character
-        experience points (int): Experience point stat
-        TODO skills (list: Skills): List of skills the character has 
-        TODO items (list: Items) List of items the character has 
-        TODO gold (int): Amount of gold character has 
+        experience_points (int): Experience point stat
+        skills (list: Skills): List of skills the character has 
+        items (list: Items) List of items the character has 
+        gold (int): Amount of gold character has 
 
     Constructor: (surf, name, attack, defence, level, max_health, hit_points, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
 
@@ -38,8 +36,8 @@ class Character(Entity):
     __gold = None
 
     # Constructor
-    def __init__(self, surf, name, attack, defence, level, max_health, hit_points, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold):
-        super().__init__(surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord) 
+    def __init__(self, surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, level, experience_points, skills, items, gold, healthbar):
+        super().__init__(surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, healthbar) 
         self.setLevel(level)
         self.setExperiencePoints(experience_points)
         self.setSkills(skills)

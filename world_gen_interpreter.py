@@ -152,7 +152,7 @@ class WorldGenInterpreter:
                 new_enemy = Enemy(pygame.image.load(GAME_ASSETS[entity_info[0]]), entity_info[1], int(entity_info[2]), int(entity_info[3]), int(entity_info[4]), int(entity_info[4]), entity_info[5], True, xcoord, ycoord, entity_info[6], int(entity_info[7]), int(entity_info[8])) 
                 self.getEnemyGroup().add(new_enemy) # adds new enemy to enemy_group
 
-            elif entity_type == 'N': # entity is an npc with constructor: (surf, name, dialogue)
+           
                 new_npc = Npc(pygame.image.load(GAME_ASSETS[entity_info[0]]), entity_info[1], entity_info[2])
                 self.getNpcGroup.add(new_npc)
                     

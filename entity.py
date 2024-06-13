@@ -1,13 +1,13 @@
 import pygame
 from weapon import Weapon
-from health_bar import Healthbar
+from healthbar import Healthbar
 from abc import ABC, abstractmethod
 
 class Entity(pygame.sprite.Sprite, ABC):
     """
     Generalised abstract class that represents a character or an enemy sprite
     Attributes:
-        surf (pygame.Surface): Pygame surface for the entity, onto which to blit the image, weapon and healthbar - 64x64 transparent square
+        surf (pygame.Surface): Pygame surface for the entity, onto which to blit the entity image, weapon and healthbar - 64x64 transparent square
         image (pygame.image): Entity's sprite image
         rect (pygame.Rect): Rectangle representing entity Surface position
         name (str): Name of character
@@ -19,35 +19,38 @@ class Entity(pygame.sprite.Sprite, ABC):
         is_alive (bool): Whether entity's is alive: hitpoints above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
-        healthbar (Healthbar): Healthbar of entity
+        health_bar (Healthbar): Healthbar of entity
     
     Constructor: (image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
 
     Methods:
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes hitpoints according to defence and damage.
+        TODO updateHealthbar(self)
+        TODO updateScreenPosition(self)
 
     """
 
-
     # Attributes
     __surf = None
+    __image = None
     __rect = None
     __name = None
     __attack = None
     __defence = None
-    __hit_points = None
     __max_health = None
+    __hit_points = None
     __weapon = None
     __is_alive = None
     __xcoord = None
     __ycoord = None
+    __healthbar = None
 
     # Constructor
-    def __init__(self, surf, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord):
-        super().__init__()
+    def __init__(self, surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, healthbar):
         self.setSurf(surf)
-        self.setRect(self.getSurf().get_rect())
+        self.setImage(image)
+        self.setRect(self.getsurf().get_rect())
         self.setName(name)
         self.setAttack(attack)
         self.setDefence(defence)
@@ -57,10 +60,13 @@ class Entity(pygame.sprite.Sprite, ABC):
         self.setIsAlive(is_alive)
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
+        self.setHealthbar(healthbar)
 
     # Getters
     def getSurf(self):
         return self.__surf
+    def getImage(self):
+        return self.__image
     def getRect(self):
         return self.__rect
     def getName(self):
@@ -81,16 +87,23 @@ class Entity(pygame.sprite.Sprite, ABC):
         return self.__xcoord
     def getYcoord(self):
         return self.__ycoord
+    def getHealthbar(self):
+        return self.__healthbar
 
     # Setters
     def setSurf(self, surf):
         self.__surf = surf
+    def setImage(self, image):
+        self.__image = image
     def setRect(self, rect):
         self.__rect = rect
     def setName(self, name):
         self.__name = name
     def setAttack(self, attack):
-        self.__attack = attack
+        if attack < 0:
+            self.__attack = 0
+        else:
+            self.__attack = attack
     def setDefence(self, defence):
         if defence < 0:
             self.__defence = 0
@@ -118,10 +131,11 @@ class Entity(pygame.sprite.Sprite, ABC):
         self.__xcoord = xcoord
     def setYcoord(self, ycoord):
         self.__ycoord = ycoord
+    def setHealthbar(self, health_bar):
+        self.__health_bar = health_bar
 
 
     # Methods
-
     @abstractmethod
     def getInfo(self):
         pass
