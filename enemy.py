@@ -38,7 +38,7 @@ class Enemy(ActiveEntity):
         weapon = Weapon(weapon_id, xcoord, ycoord) # creates weapon object enemy is wielding
         healthbar = Healthbar(pygame.Surface((1,1)), health, health, xcoord, ycoord) # creates healthbar object attached to enemy
     
-        # Initialising enemy object. Note that health variable is used to set both max_health and hit_points.
+        # Initialising enemy object. Note that health variable is used to set both max_health and health.
         super().__init__(pygame.Surface((64, 64)), # enemy surface
                          pygame.image.load(GAME_ASSETS[surf]), # enemy image
                          name, attack, defence, health, health, weapon, True, xcoord, ycoord, healthbar)

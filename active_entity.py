@@ -13,21 +13,19 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         name (str): Name of character
         attack (int): Attack stat
         defence (int): Defence stat
-        max_health (int): Maximum hit points stat
-        hit_points (int): Current hit points stat
+        max_health (int): Maximum health stat
+        health (int): Current health stat
         weapon (Weapon): Currently held weapon
-        is_alive (bool): Whether entity's is alive: hitpoints above 0 or not
+        is_alive (bool): Whether entity's is alive: health above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
         health_bar (Healthbar): Healthbar of entity
     
-    Constructor: (image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord)
+    Constructor: (image, name, attack, defence, max_health, health, weapon, is_alive, xcoord, ycoord)
 
     Methods:
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
-        takeDamage(self, amount): Changes hitpoints according to defence and damage.
-        TODO updateHealthbar(self)
-        TODO updateScreenPosition(self)
+        takeDamage(self, amount): Changes health according to defence and damage.
 
     """
 
@@ -39,7 +37,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     __attack = None
     __defence = None
     __max_health = None
-    __hit_points = None
+    __health = None
     __weapon = None
     __is_alive = None
     __xcoord = None
@@ -54,7 +52,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
                  attack: int, 
                  defence: int, 
                  max_health: int, 
-                 hit_points: int, 
+                 health: int, 
                  weapon: str, 
                  is_alive: bool, 
                  xcoord: float, 
@@ -68,7 +66,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.setAttack(attack)
         self.setDefence(defence)
         self.setMaxHealth(max_health)
-        self.setHitPoints(hit_points)
+        self.setHealth(health)
         self.setWeapon(weapon)
         self.setIsAlive(is_alive)
         self.setXcoord(xcoord)
@@ -90,8 +88,8 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         return self.__defence
     def getMaxHealth(self):
         return self.__max_health
-    def getHitPoints(self):
-        return self.__hit_points
+    def getHealth(self):
+        return self.__health
     def getWeapon(self):
         return self.__weapon
     def getIsAlive(self):
@@ -117,36 +115,54 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
             self.__attack = 0
         else:
             self.__attack = attack
+
     def setDefence(self, defence):
         if defence < 0:
             self.__defence = 0
         else:
             self.__defence = defence
+
     def setMaxHealth(self, max_health):
         if max_health <= 0: # makes sure max_health > 0
             self.setMaxHealth(1)
         else:
             self.__max_health = max_health
-    def setHitPoints(self, hit_points):
+        # Update Healthbar's display
+        self.getHealthbar().setEntityMaxHealth(self.getMaxHealth())
+        self.getHealthbar().updateHealth()
+        
+    def setHealth(self, health):
         max_health = self.getMaxHealth() 
-        if hit_points > max_health: # ensures 0 <= hit_points <= max_health
-            self.__hit_points = max_health
-        elif hit_points < max_health:
-            self.__hit_points = 0
+        if health > max_health: # ensures 0 <= health <= max_health
+            self.__health = max_health
+        elif health < max_health:
+            self.__health = 0
             self.setIsAlive(False)
         else:
-            self.__hit_points = hit_points
+            self.__health = health
+        # Update Healthbar's display
+        self.getHealthbar().setEntityHealth(self.getHealth())
+        self.getHealthbar().updateHealth()
+        
     def setWeapon(self, weapon):
         self.__weapon = weapon
     def setIsAlive(self, is_alive):
         self.__is_alive = is_alive
     def setXcoord(self, xcoord):
         self.__xcoord = xcoord
+        # Update Healthbar's position
+        self.getHealthbar().setEntityXcoord(self.getXcoord())
+        self.getHealthbar().updatePosition()
+
     def setYcoord(self, ycoord):
         self.__ycoord = ycoord
+        # Update Healthbar's position
+        self.getHealthbar().setEntityYcoord(self.getYcoord())
+        self.getHealthbar().updatePosition()
+
     def setHealthbar(self, health_bar):
         self.__health_bar = health_bar
-
+        
 
     # Methods
     @abstractmethod
@@ -159,9 +175,9 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         Then subtract from entity's hitpoint.
         """
         actual_damage = max(0, amount - self.defence) # TODO change formula
-        self.setHitPoints(self.getHitPoints() - actual_damage)
-        if self.getHitPoints() <= 0:
+        self.setHealth(self.getHealth() - actual_damage)
+        if self.getHealth() <= 0:
             self.setIsAlive(False)
             print(f"{self.getName()} takes {actual_damage} damage and has been defeated!")
         else:
-            print(f"{self.getName()} takes {actual_damage} damage. Remaining hit points: {self.getHitPoints()}/{self.getMaxHealth()}")
+            print(f"{self.getName()} takes {actual_damage} damage. Remaining health: {self.getHealth()}/{self.getMaxHealth()}")

@@ -6,4 +6,4 @@ Template for npc object as below:
 !!{ID}~{image}/{name}/{dialogue}
 
 !!Bo~bob/Bob/hi i am bob
-!!Is~ishaan/Ishaan/help mengxi is atacking me
+!!Is~ishaan/Ishaan/help i am ishaan
