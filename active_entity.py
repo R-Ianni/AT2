@@ -26,8 +26,8 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     Methods:
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes hitpoints according to defence and damage.
-        TODO updateHealthbar(self)
-        TODO updateScreenPosition(self)
+        updateHealthbar(self): Updates healthbar position and its health display. To be run whenever 
+        updateScreenPosition(self): Updates the position of 
 
     """
 

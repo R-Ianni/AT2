@@ -10,4 +10,4 @@ Template for enemy object as below:
 !!VP~violin_player/Violin Player/5/20/60/Vi/still/30/20
 
 
-!!RI~rocco_ianni/Rocco Ianni/100/100/200/WC/direct/100000/20000
+!!RI~rocco_ianni/Rocco Ianni/10/100000/200/WC/direct/10000000000/20000

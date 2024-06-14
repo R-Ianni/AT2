@@ -4,6 +4,7 @@ from pygame.locals import *
 from enemy import Enemy
 from npc import Npc
 from character import Character
+from level_info import LevelInfo
 
 # TODO create separate classes for all the different states.
 # TODO make it so you actually can't go backwards once you have started a dungeon to make loading easier.
@@ -12,13 +13,15 @@ class GameWorld:
     Class representing the game world
     Attributes:
         screen (pygame.display): Pygame display.
-        state (str): Represents state GameWorld is in: [init_level, explore, battle, attack_menu, narrator, interaction, game_menu] TODO skill_menu, etc.
+        state (str): Represents state GameWorld is in: [world, narrator, interaction, game_menu] TODO skill_menu, etc.
         is_running (bool): Whether the GameWorld loop is to keep running or finished.
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
             ['startmenu' -> exit and run StartMenu, 'quit' -> end game loop]
         
         character (Character): Character object controlled by player
-        world_tiles object? Think we need to track this TODO Maybe need an attribute for every object.
+        level_info (LevelInfo): Initialises and tracks tile and entity information in a level.
+        foo (Foo): Gui interface with action selections
+
 
         # TODO fix attributes, from top-down view. Why am I working bottom up
         
@@ -26,9 +29,8 @@ class GameWorld:
     Constructor: (screen, world_gen_file, state, is_running, output, character, all_sprites, tile_group, npc_group, enemy_group)
 
 
-    Methods:
-        handleExplore(self): Handles state where character is moving and not in battle
-        handleBattle(self): Handles state where character is in battle with enemies
+    Methods: TODO
+        handleWorld(self): Handles state where character is in world
         handleMenu(self, menu_type): 
         handleDisplay(self)
         run(): Game loop for game world
@@ -42,7 +44,6 @@ class GameWorld:
     __is_running = None
     __character = None
     __current_level = None
-    level_surface = pygame.Surface((768,768)) # TODO fix not really needed
     __output = None
     __all_sprites = None
     __tile_group = None
@@ -117,16 +118,9 @@ class GameWorld:
     def setEnemyGroup(self, enemy_group):
         self.__enemy_group = enemy_group
 
-
-    def initialiseLevel(self):
-        pass #TODO
-
-    def handleExplore(self):
+    def handleWorld(self):
         pass
     
-    def handleBattle(self):
-        pass
-
     def handleActionMenu(self):
         pass
     
