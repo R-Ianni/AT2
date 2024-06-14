@@ -1,12 +1,14 @@
 import pygame
 from abc import ABC, abstractmethod
+from healthbar import Healthbar
+from weapon import Weapon
 
 class ActiveEntity(pygame.sprite.Sprite, ABC):
     """
     Abstract class that represents a character or an enemy sprite - moving/battling sprites
     Attributes:
         surf (pygame.Surface): Pygame surface for the entity, onto which to blit the entity image, weapon and healthbar - 64x64 transparent square
-        image (pygame.image): Entity's sprite image
+        image (pygame.Surface): Surface representing entity's sprite image
         rect (pygame.Rect): Rectangle representing entity Surface position
         name (str): Name of character
         attack (int): Attack stat
@@ -30,9 +32,9 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     """
 
     # Attributes
-    __surf = None
-    __image = None
-    __rect = None
+    __surf = None 
+    __image = None 
+    __rect = None 
     __name = None
     __attack = None
     __defence = None
@@ -41,14 +43,27 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     __weapon = None
     __is_alive = None
     __xcoord = None
-    __ycoord = None
-    __healthbar = None
+    __ycoord  = None
+    __healthbar= None
 
     # Constructor
-    def __init__(self, surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, healthbar):
+    def __init__(self, 
+                 surf: pygame.Surface, 
+                 image: pygame.Surface, 
+                 name: str, 
+                 attack: int, 
+                 defence: int, 
+                 max_health: int, 
+                 hit_points: int, 
+                 weapon: str, 
+                 is_alive: bool, 
+                 xcoord: float, 
+                 ycoord: float, 
+                 healthbar: Healthbar):
+        super().__init__()
         self.setSurf(surf)
         self.setImage(image)
-        self.setRect(self.getsurf().get_rect())
+        self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setAttack(attack)
         self.setDefence(defence)

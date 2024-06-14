@@ -3,6 +3,7 @@ from assets import GAME_ASSETS
 from pygame.locals import *
 from enemy import Enemy
 from npc import Npc
+from character import Character
 
 # TODO create separate classes for all the different states.
 # TODO make it so you actually can't go backwards once you have started a dungeon to make loading easier.
@@ -41,7 +42,7 @@ class GameWorld:
     __is_running = None
     __character = None
     __current_level = None
-    level_surface = pygame.Surface((768,768)) # TODO fix
+    level_surface = pygame.Surface((768,768)) # TODO fix not really needed
     __output = None
     __all_sprites = None
     __tile_group = None
@@ -49,7 +50,17 @@ class GameWorld:
     __enemy_group = None
     
     # Constructor
-    def __init__(self, screen, state, is_running, character, current_level, output=None, all_sprites=pygame.sprite.Group, tile_group=pygame.sprite.Group, npc_group=pygame.sprite.Group, enemy_group=pygame.sprite.Group):
+    def __init__(self, 
+                 screen: pygame.Surface, 
+                 state: str, 
+                 is_running: bool, 
+                 character: Character, 
+                 current_level: int, 
+                 output: str = 'quit', 
+                 all_sprites = pygame.sprite.Group, 
+                 tile_group = pygame.sprite.Group, 
+                 npc_group = pygame.sprite.Group, 
+                 enemy_group = pygame.sprite.Group):
         self.setScreen(screen)
         self.setState(state)
         self.setIsRunning(is_running)

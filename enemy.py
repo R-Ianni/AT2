@@ -29,11 +29,12 @@ class Enemy(ActiveEntity):
     __gold_yield = None
 
     # Constructor
-    def __init__(self, enemy_id, xcoord, ycoord):
+    def __init__(self, enemy_id: str, xcoord: int, ycoord: int):
         # Getting and unpacking file info
         file_interpreter = FileIdInterpreter('gameinfostorage/enemy_id.txt', enemy_id)
-        attribute_list = file_interpreter.interpretFileInfo() # [surf, name, attack, defence, health, weapon, movement_pattern, xp_yield, gold_yield]
+        attribute_list = file_interpreter.interpretFileInfo() # [surf, name, attack, defence, health, weapon_id, movement_pattern, xp_yield, gold_yield]
         surf, name, attack, defence, health, weapon_id, movement_pattern, xp_yield, gold_yield = attribute_list # unpacks attribute_list
+        attack, defence, health, xp_yield, gold_yield = [int(i) for i in (attack, defence, health, xp_yield, gold_yield)] # converts some attributes to integers
         weapon = Weapon(weapon_id, xcoord, ycoord) # creates weapon object enemy is wielding
         healthbar = Healthbar(pygame.Surface((1,1)), health, health, xcoord, ycoord) # creates healthbar object attached to enemy
     

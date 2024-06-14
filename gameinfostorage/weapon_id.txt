@@ -6,3 +6,9 @@ Template for weapon object as below:
 !!{ID}~{image}/{name}/{*attack_ids}
 
 !!Sw~sword/Sword/Sl/Ch
+
+!!Mc~mace/Mace
+!!Cl~club/Club
+!!Vi~violin/Violin
+
+!!WC~whiteboard_cleaner/Whiteboard Cleaner/Co

@@ -6,10 +6,10 @@ class Button(pygame.sprite.Sprite):
     TO USE: if event.type == pygame.MOUSEBUTTONDOWN, and event.button == 1, then return output
     
     Attributes:
-        surf (pygame.image): Surface for the button.
+        surf (pygame.Surface): Surface for the button.
         rect (pygame.Rect): Rectangle underlying the button.
         output (str): What the button should return when clicked
-        coords (tuple: int, int): Coordinates of the centre of button
+        coords (tuple[int, int]): Coordinates of the centre of button
 
     Constructor: (button_image, output, coords)
     """
@@ -20,8 +20,9 @@ class Button(pygame.sprite.Sprite):
     __output = None
     __coords = None
 
+
     # Constructor
-    def __init__(self, button_image, output, coords):
+    def __init__(self, button_image: pygame.Surface, output: str, coords: tuple[int, int]):
         super().__init__()
         self.setSurf(button_image) # sets surface to be the inputted image
         self.setRect(self.getSurf().get_rect()) # rectangle of surface

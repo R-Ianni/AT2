@@ -32,7 +32,7 @@ class Weapon(pygame.sprite.Sprite):
     __entity_ycoord = None
 
     # Constructor
-    def __init__(self, weapon_id, entity_xcoord, entity_ycoord):
+    def __init__(self, weapon_id: str, entity_xcoord: int, entity_ycoord: int):
         # Getting and unpacking file info
         file_interpreter = FileIdInterpreter('gameinfostorage/weapon_id.txt', weapon_id)
         attribute_list = file_interpreter.interpretFileInfo() # [image, name, *attacks]

@@ -28,7 +28,7 @@ class Npc(pygame.sprite.Sprite):
     __ycoord = None
 
     # Constructor
-    def __init__(self, npc_id, xcoord, ycoord):
+    def __init__(self, npc_id: str, xcoord: int, ycoord: int):
         # Getting and unpacking file info
         file_interpreter = FileIdInterpreter('gameinfostorage/npc_id.txt', npc_id)
         attribute_list = file_interpreter.interpretFileInfo() # [image, name, dialogue]

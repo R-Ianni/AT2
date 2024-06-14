@@ -1,20 +1,62 @@
 # Attributes
-__file_name = None
-__id = None
+__level_name = None
+__all_clear = None
+__board_surf = None
+__character = None
+__position_tile_dict = None
+__npc_group = None
+__enemy_group = None
+__portal_group = None
+__all_sprites = None
 
 # Constructor
-def __init__(self, file_name, id):
-    self.setFileName(file_name)
-    self.setId(id)
+def __init__(self, level_name, all_clear, board_surf, character, position_tile_dict, npc_group, enemy_group, portal_group, all_sprites):
+    self.setLevelName(level_name)
+    self.setAllClear(all_clear)
+    self.setBoardSurf(board_surf)
+    self.setCharacter(character)
+    self.setPositionTileDict(position_tile_dict)
+    self.setNpcGroup(npc_group)
+    self.setEnemyGroup(enemy_group)
+    self.setPortalGroup(portal_group)
+    self.setAllSprites(all_sprites)
 
 # Getters
-def getFileName(self):
-    return self.__file_name
-def getId(self):
-    return self.__id
+def getLevelName(self):
+    return self.__level_name
+def getAllClear(self):
+    return self.__all_clear
+def getBoardSurf(self):
+    return self.__board_surf
+def getCharacter(self):
+    return self.__character
+def getPositionTileDict(self):
+    return self.__position_tile_dict
+def getNpcGroup(self):
+    return self.__npc_group
+def getEnemyGroup(self):
+    return self.__enemy_group
+def getPortalGroup(self):
+    return self.__portal_group
+def getAllSprites(self):
+    return self.__all_sprites
 
 # Setters
-def setFileName(self, file_name):
-    self.__file_name = file_name
-def setId(self, id):
-    self.__id = id
+def setLevelName(self, level_name):
+    self.__level_name = level_name
+def setAllClear(self, all_clear):
+    self.__all_clear = all_clear
+def setBoardSurf(self, board_surf):
+    self.__board_surf = board_surf
+def setCharacter(self, character):
+    self.__character = character
+def setPositionTileDict(self, position_tile_dict):
+    self.__position_tile_dict = position_tile_dict
+def setNpcGroup(self, npc_group):
+    self.__npc_group = npc_group
+def setEnemyGroup(self, enemy_group):
+    self.__enemy_group = enemy_group
+def setPortalGroup(self, portal_group):
+    self.__portal_group = portal_group
+def setAllSprites(self, all_sprites):
+    self.__all_sprites = all_sprites

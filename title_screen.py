@@ -31,7 +31,7 @@ class TitleScreen:
     __output = None
 
     # Constructor
-    def __init__(self, screen, button_group, is_running):
+    def __init__(self, screen: pygame.Surface, button_group: pygame.sprite.Group, is_running: bool):
         self.setScreen(screen)
         self.setButtonGroup(button_group)
         self.setIsRunning(is_running)

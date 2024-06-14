@@ -7,3 +7,5 @@ Template for attack object as below:
 
 !!Sl~Slash/30/80/1/0
 !!Ch~Chop/50/50/1/0
+
+!!Co~Corrode/200/100/5/0

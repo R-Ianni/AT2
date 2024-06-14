@@ -26,7 +26,7 @@ class Portal(pygame.sprite.Sprite):
     __destination = None
 
     # Constructor
-    def __init__(self, portal_id, xcoord, ycoord):
+    def __init__(self, portal_id: str, xcoord: int, ycoord: int):
         # Getting and unpacking file info
         file_interpreter = FileIdInterpreter('gameinfostorage/portal_id.txt', portal_id)
         destination, = file_interpreter.interpretFileInfo() 

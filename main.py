@@ -36,7 +36,7 @@ class Game:
     # TODO add clock attribute for framerate
 
     # Constructor
-    def __init__(self, screen, state, is_running):
+    def __init__(self, screen: pygame.Surface, state: str, is_running: bool):
         pygame.init() # Initialise pygame
         self.setScreen(screen)
         self.setState(state)

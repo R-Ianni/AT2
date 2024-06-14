@@ -25,16 +25,18 @@ class Healthbar:
     __surf = None
     __rect = None
     __entity_health = None
-    __entity_max_health = None
-    __entity_position = None
+    __entity_max_hp = None
+    __entity_xcoord = None
+    __entity_ycoord = None
 
     # Constructor
-    def __init__(self, surf, entity_health, entity_max_health, entity_x_coord, entity_y_coord):
+    def __init__(self, surf: pygame.Surface, entity_health: int, entity_max_hp: int, entity_xcoord: int, entity_ycoord: int):
         self.setSurf(surf)
         self.setRect(self.getSurf().get_rect())
         self.setEntityHealth(entity_health)
-        self.setEntityMaxHealth(entity_max_health)
-       # self.setEntityPosition(entity_position)
+        self.setEntityMaxHp(entity_max_hp)
+        self.setEntityXcoord(entity_xcoord)
+        self.setEntityYcoord(entity_ycoord)
 
     # Getters
     def getSurf(self):
@@ -43,10 +45,12 @@ class Healthbar:
         return self.__rect
     def getEntityHealth(self):
         return self.__entity_health
-    def getEntityMaxHealth(self):
-        return self.__entity_max_health
-    def getEntityPosition(self):
-        return self.__entity_position
+    def getEntityMaxHp(self):
+        return self.__entity_max_hp
+    def getEntityXcoord(self):
+        return self.__entity_xcoord
+    def getEntityYcoord(self):
+        return self.__entity_ycoord
 
     # Setters
     def setSurf(self, surf):
@@ -55,7 +59,9 @@ class Healthbar:
         self.__rect = rect
     def setEntityHealth(self, entity_health):
         self.__entity_health = entity_health
-    def setEntityMaxHealth(self, entity_max_health):
-        self.__entity_max_health = entity_max_health
-    def setEntityPosition(self, entity_position):
-        self.__entity_position = entity_position
+    def setEntityMaxHp(self, entity_max_hp):
+        self.__entity_max_hp = entity_max_hp
+    def setEntityXcoord(self, entity_xcoord):
+        self.__entity_xcoord = entity_xcoord
+    def setEntityYcoord(self, entity_ycoord):
+        self.__entity_ycoord = entity_ycoord

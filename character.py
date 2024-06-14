@@ -2,7 +2,8 @@ import pygame
 from active_entity import ActiveEntity
 from pygame.locals import *
 from assets import GAME_ASSETS
-
+from healthbar import Healthbar
+from weapon import Weapon
 
 class Character(ActiveEntity):
     """
@@ -12,8 +13,8 @@ class Character(ActiveEntity):
         MAX_LEVEL (int): Maximum level of character
         level (int): Current level of character
         experience_points (int): Experience point stat
-        skills (list: Skills): List of skills the character has 
-        items (list: Items) List of items the character has 
+        skills (list[*Skill]): List of skills the character has 
+        items (list[*Item]): List of items the character has 
         gold (int): Amount of gold character has 
 
     Constructor: (surf, name, attack, defence, level, max_health, hit_points, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
@@ -36,7 +37,24 @@ class Character(ActiveEntity):
     __gold = None
 
     # Constructor
-    def __init__(self, surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, level, experience_points, skills, items, gold, healthbar):
+    def __init__(self, 
+                 surf: pygame.Surface, 
+                 image: pygame.Surface, 
+                 name: str, 
+                 attack: int, 
+                 defence: int, 
+                 max_health: int, 
+                 hit_points: int, 
+                 weapon: Weapon, 
+                 is_alive: bool, 
+                 xcoord: int, 
+                 ycoord: int, 
+                 level: int, 
+                 experience_points: int, 
+                 skills: list, 
+                 items: list, 
+                 gold: int, 
+                 healthbar: Healthbar):
         super().__init__(surf, image, name, attack, defence, max_health, hit_points, weapon, is_alive, xcoord, ycoord, healthbar) 
         self.setLevel(level)
         self.setExperiencePoints(experience_points)
