@@ -6,7 +6,7 @@ class Healthbar:
 
     Attributes:
 
-        surf (pygame.Surface): Represents the surface of the healthbar: Should be 64x16
+        surf (pygame.Surface): Represents the surface of the healthbar. size: 64x16
         rect (pygame.Rect): Position of surface
 
         Entity info:
@@ -56,7 +56,6 @@ class Healthbar:
         """
         Updates the health indicator of healthbar - to be called whenever entity health or max_health updates
         """
-        surf = self.getSurf()
         length = int(self.getEntityHealth()/self.getEntityMaxHealth() * 62) # calculates proportion of healthbar to be filled
-        pygame.draw.rect(surf, (50, 50, 50), (0, 0, 64, 16)) # draw background of healthbar
-        pygame.draw.rect(surf, (0, 50, 200), (1, 1, length, 14)) # draw health indicator
+        pygame.draw.rect(self.getSurf(), (50, 50, 50), (0, 0, 64, 16)) # draw background of healthbar
+        pygame.draw.rect(self.getSurf(), (0, 50, 200), (1, 1, length, 14)) # draw health indicator

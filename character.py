@@ -7,7 +7,7 @@ from weapon import Weapon
 
 class Character(ActiveEntity):
     """
-    Class representing a character sprite
+    Class representing a character sprite, with parent ActiveEntity
 
     Attributes:
         MAX_LEVEL (int): Maximum level of character
@@ -17,7 +17,7 @@ class Character(ActiveEntity):
         items (list[*Item]): List of items the character has 
         gold (int): Amount of gold character has 
 
-    Constructor: (surf, name, attack, defence, level, max_health, health, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
+    Constructor: (name, attack, defence, level, max_health, health, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
 
     Methods:
         gainExperience(self, experience): Increases experience, and if possible levels up.
@@ -37,8 +37,7 @@ class Character(ActiveEntity):
     __gold = None
 
     # Constructor
-    def __init__(self, 
-                 surf: pygame.Surface, 
+    def __init__(self,  
                  image: pygame.Surface, 
                  name: str, 
                  attack: int, 
@@ -55,7 +54,7 @@ class Character(ActiveEntity):
                  items: list, 
                  gold: int, 
                  healthbar: Healthbar):
-        super().__init__(surf, image, name, attack, defence, max_health, health, weapon, is_alive, xcoord, ycoord, healthbar) 
+        super().__init__(image, name, attack, defence, max_health, health, weapon, is_alive, xcoord, ycoord, healthbar) 
         self.setLevel(level)
         self.setExperiencePoints(experience_points)
         self.setSkills(skills)

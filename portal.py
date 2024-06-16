@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from assets import GAME_ASSETS
 from file_id_interpreter import FileIdInterpreter
 
@@ -33,12 +34,12 @@ class Portal(pygame.sprite.Sprite):
         
         # Initialising portal object.
         super().__init__()
-        self.setSurf(pygame.Surface((64, 64)))
         self.setImage("portal image ") # TODO get portal image asset
         self.setRect(self.getSurf().get_rect())
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
         self.setDestination(destination)
+        self.setSurf(pygame.Surface((64, 64), SRCALPHA))
 
     # Getters
     def getSurf(self):

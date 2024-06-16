@@ -1,4 +1,5 @@
 import pygame 
+from pygame.locals import *
 from file_id_interpreter import FileIdInterpreter
 from assets import GAME_ASSETS
 from attack import Attack
@@ -39,13 +40,13 @@ class Weapon(pygame.sprite.Sprite):
         image, name = attribute_list[0], attribute_list[1]
         
         # Initialising weapon object.
-        self.setSurf(pygame.Surface((64, 64)))
         self.setImage(pygame.image.load(GAME_ASSETS[image]))
         self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setAttackList(list())
         self.setEntityXcoord(entity_xcoord)
         self.setEntityYcoord(entity_ycoord)
+        self.setSurf(pygame.Surface((64, 64), SRCALPHA))
 
         # Adds all attacks to the attack list.
         for attack_id in attribute_list[2:]:

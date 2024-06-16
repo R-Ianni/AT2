@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from assets import GAME_ASSETS
 from file_id_interpreter import FileIdInterpreter
 
@@ -36,13 +37,13 @@ class Npc(pygame.sprite.Sprite):
         
         # Initialising npc object.
         super().__init__()
-        self.setSurf(pygame.Surface((64, 64)))
         self.setImage(pygame.image.load(GAME_ASSETS[image]))
         self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setDialogue(dialogue)
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
+        self.setSurf(pygame.Surface((64, 64), SRCALPHA))
 
 
     # Getters

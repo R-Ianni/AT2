@@ -1,11 +1,12 @@
 import pygame
+from pygame.locals import *
 from abc import ABC, abstractmethod
 from healthbar import Healthbar
 from weapon import Weapon
 
 class ActiveEntity(pygame.sprite.Sprite, ABC):
     """
-    Abstract class that represents a character or an enemy sprite - moving/battling sprites
+    Abstract class with children Character and Entity sprites. Represents moving/battling sprites
     Attributes:
         surf (pygame.Surface): Pygame surface for the entity, onto which to blit the entity image, weapon and healthbar - 64x64 transparent square
         image (pygame.Surface): Surface representing entity's sprite image
@@ -25,6 +26,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
 
     Methods:
         updateSurf(self): Blits the character image, healthbar and weapon onto the entity's surface.
+        updatePos(self): Changes position of Rect according to xcoord, ycoord
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes health according to defence and damage.
 
@@ -47,7 +49,6 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
 
     # Constructor
     def __init__(self, 
-                 surf: pygame.Surface, 
                  image: pygame.Surface, 
                  name: str, 
                  attack: int, 
@@ -58,9 +59,9 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
                  is_alive: bool, 
                  xcoord: float, 
                  ycoord: float, 
-                 healthbar: Healthbar):
+                 healthbar: Healthbar,
+                 surf: pygame.Surface = pygame.Surface((64, 64), SRCALPHA)):
         super().__init__()
-        self.setSurf(surf)
         self.setImage(image)
         self.setRect(self.getSurf().get_rect())
         self.setName(name)
@@ -73,6 +74,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
         self.setHealthbar(healthbar)
+        self.setSurf(surf)
 
     # Getters
     def getSurf(self):
@@ -158,13 +160,21 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         
 
     # Methods
-    def updateSelf(self):
+    def updateSurf(self):
         """
         Blits the character image, healthbar and weapon onto the entity's surface.
         """
         surf = self.getSurf()
         surf.fill((0,0,0,0))
-        pass
+        surf.blit(self.getImage(), (0,0))
+        surf.blit(self.getHealthbar().getSurf(), (0, 48))
+        # surf.blit(self.getWeapon().getSurf(), (0,0))
+    
+    def updatePos(self):
+        """
+        Changes position of Rect according to xcoord, ycoord
+        """
+        self.getRect().topleft = (self.getXcoord() * 64, self.getYcoord() * 64)
 
     @abstractmethod
     def getInfo(self):
