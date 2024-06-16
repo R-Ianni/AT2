@@ -2,7 +2,7 @@ import pygame
 
 class Healthbar:
     """
-    Class representing a healthbar sprite
+    Class representing a healthbar surface
 
     Attributes:
 
@@ -12,14 +12,11 @@ class Healthbar:
         Entity info:
         entity_health (int)
         entity_max_health (int)
-        entity_xcoord (int)
-        entity_ycoord (int)
 
-    Constructor: ()
+    Constructor: (entity_health, entity_max_health)
 
     Methods: 
         updateHealth(self): Updates the health indicator of healthbar - to be called whenever entity health or max_health updates
-        updatePosition(self): Updates the position of healthbar - to be called whenever entity xcoord or ycoord updates
     """
 
     # Attributes
@@ -27,18 +24,13 @@ class Healthbar:
     __rect = None
     __entity_health = None
     __entity_max_health = None
-    __entity_xcoord = None
-    __entity_ycoord = None
 
     # Constructor
-    def __init__(self, surf: pygame.Surface, entity_health: int, entity_max_health: int, entity_xcoord: int, entity_ycoord: int):
-        self.setSurf(surf)
-        self.setRect(self.getSurf().get_rect())
+    def __init__(self, entity_health: int, entity_max_health: int, surf: pygame.Surface = pygame.Surface((64, 16))):
         self.setEntityHealth(entity_health)
         self.setEntityMaxHealth(entity_max_health)
-        self.setEntityXcoord(entity_xcoord)
-        self.setEntityYcoord(entity_ycoord)
-        # initialises healthbar surface and position
+        self.setSurf(surf)
+        self.setRect(self.getSurf().get_rect())
 
     # Getters
     def getSurf(self):
@@ -49,10 +41,6 @@ class Healthbar:
         return self.__entity_health
     def getEntityMaxHealth(self):
         return self.__entity_max_health
-    def getEntityXcoord(self):
-        return self.__entity_xcoord
-    def getEntityYcoord(self):
-        return self.__entity_ycoord
 
     # Setters
     def setSurf(self, surf):
@@ -63,10 +51,6 @@ class Healthbar:
         self.__entity_health = entity_health
     def setEntityMaxHealth(self, entity_max_health):
         self.__entity_max_health = entity_max_health
-    def setEntityXcoord(self, entity_xcoord):
-        self.__entity_xcoord = entity_xcoord
-    def setEntityYcoord(self, entity_ycoord):
-        self.__entity_ycoord = entity_ycoord
 
     def updateHealthbar(self):
         """
@@ -74,12 +58,5 @@ class Healthbar:
         """
         surf = self.getSurf()
         length = int(self.getEntityHealth()/self.getEntityMaxHealth() * 62) # calculates proportion of healthbar to be filled
-        pygame.draw.rect(surf, (50, 50, 50), (0, 0, 64, 16))
-        pygame.draw.rect(surf, (0, 50, 200), (1, 1, length, 14))
-
-    def updateScreenPosition(self):
-        """
-        Updates the position of healthbar - to be called whenever entity xcoord or ycoord updates
-        """
-        rect = self.getRect()
-        # TODO
+        pygame.draw.rect(surf, (50, 50, 50), (0, 0, 64, 16)) # draw background of healthbar
+        pygame.draw.rect(surf, (0, 50, 200), (1, 1, length, 14)) # draw health indicator

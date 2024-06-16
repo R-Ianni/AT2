@@ -36,7 +36,7 @@ class Enemy(ActiveEntity):
         surf, name, attack, defence, health, weapon_id, movement_pattern, xp_yield, gold_yield = attribute_list # unpacks attribute_list
         attack, defence, health, xp_yield, gold_yield = [int(i) for i in (attack, defence, health, xp_yield, gold_yield)] # converts some attributes to integers
         weapon = Weapon(weapon_id, xcoord, ycoord) # creates weapon object enemy is wielding
-        healthbar = Healthbar(pygame.Surface((1,1)), health, health, xcoord, ycoord) # creates healthbar object attached to enemy
+        healthbar = Healthbar(health, health) # creates healthbar object attached to enemy
     
         # Initialising enemy object. Note that health variable is used to set both max_health and health.
         super().__init__(pygame.Surface((64, 64)), # enemy surface

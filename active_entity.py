@@ -24,6 +24,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     Constructor: (image, name, attack, defence, max_health, health, weapon, is_alive, xcoord, ycoord)
 
     Methods:
+        updateSurf(self): Blits the character image, healthbar and weapon onto the entity's surface.
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
         takeDamage(self, amount): Changes health according to defence and damage.
 
@@ -150,23 +151,26 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.__is_alive = is_alive
     def setXcoord(self, xcoord):
         self.__xcoord = xcoord
-        # Update Healthbar's position
-        self.getHealthbar().setEntityXcoord(self.getXcoord())
-        self.getHealthbar().updatePosition()
-
     def setYcoord(self, ycoord):
         self.__ycoord = ycoord
-        # Update Healthbar's position
-        self.getHealthbar().setEntityYcoord(self.getYcoord())
-        self.getHealthbar().updatePosition()
-
     def setHealthbar(self, health_bar):
         self.__health_bar = health_bar
         
 
     # Methods
+    def updateSelf(self):
+        """
+        Blits the character image, healthbar and weapon onto the entity's surface.
+        """
+        surf = self.getSurf()
+        surf.fill((0,0,0,0))
+        pass
+
     @abstractmethod
     def getInfo(self):
+        """
+        Returns entity info.
+        """
         pass
 
     def takeDamage(self, amount): # amount = raw damage
