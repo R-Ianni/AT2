@@ -28,7 +28,9 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         updateSurf(self): Blits the character image, healthbar and weapon onto the entity's surface.
         updatePos(self): Changes position of Rect according to xcoord, ycoord
         getInfo(self) @abstractmethod: Returns the info of entity for saving. TODO might not even be needed with pickling.
-        takeDamage(self, amount): Changes health according to defence and damage.
+        takeDamage(self, amount): Changes hitpoints according to defence and damage.
+        updateHealthbar(self): Updates healthbar position and its health display. To be run whenever 
+        updateScreenPosition(self): Updates the position of 
 
     """
 

@@ -200,6 +200,6 @@ while run:
     for event in pygame.event.get():
         if event.type == QUIT:
             run = False
-    screen.blit(test.getBoardSurf(), (0, 0)) # Blits the board to the 0,0 coordinate
+    screen.blit(test.getBoardSurf(), (0, 0)) # Blits the board to the top left of screen.
     pygame.display.flip()
 pygame.quit()

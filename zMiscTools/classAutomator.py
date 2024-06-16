@@ -1,3 +1,4 @@
+# Class automator things
 def main():
     """
     Input: Attributes of a class
