@@ -14,8 +14,6 @@ class Button(pygame.sprite.Sprite):
         centre_coords (tuple[int, int]): Coordinates of the centre of button
         connected_key (str): Key that when pressed should activate the button.
 
-    Constructor: (surf, text, colour, output, centre_coords, connected_key = None)
-    
     Methods:
         initialiseButtonSurf(self): creates button surface, 
     """

@@ -10,8 +10,6 @@ class Attack:
         accuracy (int): Accuracy of attack, out of 100.
         range (int): Number of squares 
         cooldown (int): Number of turns before next use (0 => no cooldown)
-    
-    Constructor: (attack_id)
 
     Methods: TODO
         getInfo(self): Returns the info.

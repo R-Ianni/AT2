@@ -14,8 +14,6 @@ class TitleScreen:
         is_running (bool): Represents if the TitleScreen loop is running
         output (str): Output to be returned to main once loop finished. Represents next state game will enter:
             ['start' -> run GameMenu, 'quit' -> end game loop]
-
-    Constructor: (screen, button_group, is_running)
             
     Methods:
         initialiseButtons(self): Creates start, quit buttons and adds them to button_group 

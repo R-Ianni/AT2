@@ -19,8 +19,6 @@ class Game:
         screen (pygame.display): Display on which all objects are sent.
         state (str): Represents the state the game is in: ['title_screen', 'game_world', 'game_menu']
         is_running (bool): Whether game loop is running or not.
-    
-    Constructor: (screen, state, is_running)
         
     Methods:
         run(self): Runs the game main loop

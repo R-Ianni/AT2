@@ -16,9 +16,7 @@ class Character(ActiveEntity):
         skills (list[*Skill]): List of skills the character has 
         items (list[*Item]): List of items the character has 
         gold (int): Amount of gold character has 
-
-    Constructor: (name, attack, defence, level, max_health, health, weapon, is_alive, xcoord, ycoord, experience_points, skills, items, gold)
-
+        
     Methods:
         gainExperience(self, experience): Increases experience, and if possible levels up.
         updateStats(self): Updates attack, defence based on level.

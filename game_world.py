@@ -24,10 +24,6 @@ class GameWorld:
 
 
         # TODO fix attributes, from top-down view. Why am I working bottom up
-        
-
-    Constructor: (screen, world_gen_file, state, is_running, output, character, all_sprites, tile_group, npc_group, enemy_group)
-
 
     Methods: TODO
         handleWorld(self): Handles state where character is in world

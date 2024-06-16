@@ -13,8 +13,6 @@ class Healthbar:
         entity_health (int)
         entity_max_health (int)
 
-    Constructor: (entity_health, entity_max_health)
-
     Methods: 
         updateHealth(self): Updates the health indicator of healthbar - to be called whenever entity health or max_health updates
     """

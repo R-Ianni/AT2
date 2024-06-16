@@ -13,8 +13,6 @@ class Npc(pygame.sprite.Sprite):
         dialogue (str): Dialogue npc says
         xcoord (int): xcoord of npc
         ycoord (int): ycoord of npc
-    
-    Constructor: (self, npc_id, xcoord, ycoord)
 
     Methods: TODO
     """

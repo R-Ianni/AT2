@@ -14,8 +14,6 @@ class Portal(pygame.sprite.Sprite):
         xcoord (int): Board xcoord of portal
         ycoord (int): Board ycoord of portal
         destination (str): Represents the level portal leads to
-
-    Constructor: (portal_id, xcoord, ycoord)
     """
 
     # Attributes

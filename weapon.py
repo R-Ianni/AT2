@@ -17,8 +17,6 @@ class Weapon(pygame.sprite.Sprite):
         entity_xcoord (int): The xcoord of the entity holding weapon
         entity_ycoord (int): The ycoord of the entity holding weapon
 
-    Constructor: (weapon_id)
-
     Methods:
     TODO
     """

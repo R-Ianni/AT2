@@ -15,8 +15,6 @@ class Enemy(ActiveEntity):
         xp_yield (int): Represents how much xp is earned through defeating enemy
         gold_yield (int): Represents how much gold is earned through defeating enemy
     
-    Constructor: (enemy_id, xcoord, ycoord)
-    
     Methods:
         calcMovement(self, user_position): Returns a tuple (xcoord, ycoord) representing the square enemy will move to.
         #TODO

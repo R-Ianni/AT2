@@ -28,8 +28,6 @@ class LevelInfo():
         enemy_group (pygame.sprite.Group): Group containing all enemy sprites
         portal_group (pygame.sprite.Group): Group containing all portal sprites
         all_sprites (pygame.sprite.Group): Pygame group containing all sprites [tiles, character, enemies, npcs]
-
-    Constructor: (level_name, character)
     
     Methods:
         initialiseLevel(self): Initialises level tiles and entities 
