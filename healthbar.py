@@ -50,7 +50,7 @@ class Healthbar:
     def setEntityMaxHealth(self, entity_max_health):
         self.__entity_max_health = entity_max_health
 
-    def updateHealthbar(self):
+    def updateHealth(self):
         """
         Updates the health indicator of healthbar - to be called whenever entity health or max_health updates
         """

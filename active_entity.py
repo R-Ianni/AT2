@@ -20,7 +20,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         is_alive (bool): Whether entity's is alive: health above 0 or not
         xcoord (int): X coordinate of entity in world
         ycoord (int): Y coordinate of entity in world
-        health_bar (Healthbar): Healthbar of entity
+        healthbar (Healthbar): Healthbar of entity
 
     Methods:
         updateSurf(self): Blits the character image, healthbar and weapon onto the entity's surface.
@@ -45,7 +45,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
     __is_alive = None
     __xcoord = None
     __ycoord  = None
-    __healthbar= None
+    __healthbar = None
 
     # Constructor
     def __init__(self, 
@@ -66,13 +66,13 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.setName(name)
         self.setAttack(attack)
         self.setDefence(defence)
+        self.setHealthbar(healthbar)
         self.setMaxHealth(max_health)
         self.setHealth(health)
         self.setWeapon(weapon)
         self.setIsAlive(is_alive)
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
-        self.setHealthbar(healthbar)
         self.setSurf(surf)
         self.setRect(self.getSurf().get_rect())
 
@@ -155,8 +155,8 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.__xcoord = xcoord
     def setYcoord(self, ycoord):
         self.__ycoord = ycoord
-    def setHealthbar(self, health_bar):
-        self.__health_bar = health_bar
+    def setHealthbar(self, healthbar):
+        self.__healthbar = healthbar
         
 
     # Methods

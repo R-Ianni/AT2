@@ -2,7 +2,7 @@ import pygame
 import random
 from file_id_interpreter import FileIdInterpreter
 from active_entity import ActiveEntity
-from assets import GAME_ASSETS
+from assets import GAME_ASSETS, load_assets
 from healthbar import Healthbar
 from weapon import Weapon
 

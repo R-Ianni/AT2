@@ -1,38 +1,20 @@
 # Attributes
-__111 = None
-__fje = None
-__potato_ee = None
-__04_040 = None
-__gjgjg = None
+__one = None
+__two = None
 
 # Constructor
-def __init__(self, 111, fje, potato_ee, 04_040, gjgjg):
-    self.set111(111)
-    self.setFje(fje)
-    self.setPotatoEe(potato_ee)
-    self.set04040(04_040)
-    self.setGjgjg(gjgjg)
+def __init__(self, one, two):
+    self.setOne(one)
+    self.setTwo(two)
 
 # Getters
-def get111(self):
-    return self.__111
-def getFje(self):
-    return self.__fje
-def getPotatoEe(self):
-    return self.__potato_ee
-def get04040(self):
-    return self.__04_040
-def getGjgjg(self):
-    return self.__gjgjg
+def getOne(self):
+    return self.__one
+def getTwo(self):
+    return self.__two
 
 # Setters
-def set111(self, 111):
-    self.__111 = 111
-def setFje(self, fje):
-    self.__fje = fje
-def setPotatoEe(self, potato_ee):
-    self.__potato_ee = potato_ee
-def set04040(self, 04_040):
-    self.__04_040 = 04_040
-def setGjgjg(self, gjgjg):
-    self.__gjgjg = gjgjg
+def setOne(self, one):
+    self.__one = one
+def setTwo(self, two):
+    self.__two = two
