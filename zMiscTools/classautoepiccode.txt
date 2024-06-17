@@ -1,50 +1,38 @@
 # Attributes
-__surf = None
-__rect = None
-__text = None
-__colour = None
-__output = None
-__centre_coords = None
-__connected_key = None
+__111 = None
+__fje = None
+__potato_ee = None
+__04_040 = None
+__gjgjg = None
 
 # Constructor
-def __init__(self, surf, rect, text, colour, output, centre_coords, connected_key):
-    self.setSurf(surf)
-    self.setRect(rect)
-    self.setText(text)
-    self.setColour(colour)
-    self.setOutput(output)
-    self.setCentreCoords(centre_coords)
-    self.setConnectedKey(connected_key)
+def __init__(self, 111, fje, potato_ee, 04_040, gjgjg):
+    self.set111(111)
+    self.setFje(fje)
+    self.setPotatoEe(potato_ee)
+    self.set04040(04_040)
+    self.setGjgjg(gjgjg)
 
 # Getters
-def getSurf(self):
-    return self.__surf
-def getRect(self):
-    return self.__rect
-def getText(self):
-    return self.__text
-def getColour(self):
-    return self.__colour
-def getOutput(self):
-    return self.__output
-def getCentreCoords(self):
-    return self.__centre_coords
-def getConnectedKey(self):
-    return self.__connected_key
+def get111(self):
+    return self.__111
+def getFje(self):
+    return self.__fje
+def getPotatoEe(self):
+    return self.__potato_ee
+def get04040(self):
+    return self.__04_040
+def getGjgjg(self):
+    return self.__gjgjg
 
 # Setters
-def setSurf(self, surf):
-    self.__surf = surf
-def setRect(self, rect):
-    self.__rect = rect
-def setText(self, text):
-    self.__text = text
-def setColour(self, colour):
-    self.__colour = colour
-def setOutput(self, output):
-    self.__output = output
-def setCentreCoords(self, centre_coords):
-    self.__centre_coords = centre_coords
-def setConnectedKey(self, connected_key):
-    self.__connected_key = connected_key
+def set111(self, 111):
+    self.__111 = 111
+def setFje(self, fje):
+    self.__fje = fje
+def setPotatoEe(self, potato_ee):
+    self.__potato_ee = potato_ee
+def set04040(self, 04_040):
+    self.__04_040 = 04_040
+def setGjgjg(self, gjgjg):
+    self.__gjgjg = gjgjg

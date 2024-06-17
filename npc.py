@@ -36,12 +36,12 @@ class Npc(pygame.sprite.Sprite):
         # Initialising npc object.
         super().__init__()
         self.setImage(pygame.image.load(GAME_ASSETS[image]))
-        self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setDialogue(dialogue)
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
         self.setSurf(pygame.Surface((64, 64), SRCALPHA))
+        self.setRect(self.getSurf().get_rect())
 
 
     # Getters

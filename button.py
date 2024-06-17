@@ -15,7 +15,7 @@ class Button(pygame.sprite.Sprite):
         connected_key (str): Key that when pressed should activate the button.
 
     Methods:
-        initialiseButtonSurf(self): creates button surface, 
+        initialiseButtonSurf(self): Blits the button 
     """
 
     # Attributes
@@ -43,6 +43,8 @@ class Button(pygame.sprite.Sprite):
         self.setOutput(output)
         self.setCentreCoords(centre_coords)
         self.setConnectedKey(connected_key)
+
+        self.initialiseButtonSurf()
 
     # Getters
     def getSurf(self):
@@ -75,4 +77,10 @@ class Button(pygame.sprite.Sprite):
         self.__centre_coords = centre_coords
     def setConnectedKey(self, connected_key):
         self.__connected_key = connected_key
+
+    # Methods
+    def initialiseButtonSurf(self):
+        """
+        
+        """
 

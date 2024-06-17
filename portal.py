@@ -33,11 +33,11 @@ class Portal(pygame.sprite.Sprite):
         # Initialising portal object.
         super().__init__()
         self.setImage("portal image ") # TODO get portal image asset
-        self.setRect(self.getSurf().get_rect())
         self.setXcoord(xcoord)
         self.setYcoord(ycoord)
         self.setDestination(destination)
         self.setSurf(pygame.Surface((64, 64), SRCALPHA))
+        self.setRect(self.getSurf().get_rect())
 
     # Getters
     def getSurf(self):

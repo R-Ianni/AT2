@@ -63,7 +63,6 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
                  surf: pygame.Surface = pygame.Surface((64, 64), SRCALPHA)):
         super().__init__()
         self.setImage(image)
-        self.setRect(self.getSurf().get_rect())
         self.setName(name)
         self.setAttack(attack)
         self.setDefence(defence)
@@ -75,6 +74,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         self.setYcoord(ycoord)
         self.setHealthbar(healthbar)
         self.setSurf(surf)
+        self.setRect(self.getSurf().get_rect())
 
     # Getters
     def getSurf(self):
@@ -138,7 +138,7 @@ class ActiveEntity(pygame.sprite.Sprite, ABC):
         max_health = self.getMaxHealth() 
         if health > max_health: # ensures 0 <= health <= max_health
             self.__health = max_health
-        elif health < max_health:
+        elif health < 0:
             self.__health = 0
             self.setIsAlive(False)
         else:
