@@ -15,7 +15,7 @@ class Button(pygame.sprite.Sprite):
         connected_key (str): Key that when pressed should activate the button.
 
     Methods:
-        initialiseButtonSurf(self): Blits the button 
+        initialiseButtonSurf(self): Blits the button text onto its surface.
     """
 
     # Attributes
