@@ -1,8 +1,11 @@
+from healthbar import HealthBar
+
 class Character:
     MAX_LEVEL = 50  # Maximum level a character can reach
     ATTRIBUTE_POINTS_PER_LEVEL = 3  # Number of attribute points gained per level
 
     def __init__(self, name, character_class, armor):
+        print("Jeff")
         self.name = name  # Character's name
         self.character_class = character_class  # Character's class
         self.armor = armor  # Character's armor value
@@ -14,6 +17,8 @@ class Character:
         self.inventory = []  # Example empty list for character's inventory
         self.gold = 0  # Example starting value for character's gold
         self.attribute_points = 0  # Attribute points available to allocate
+
+
 
     def assign_attribute_points(self, attribute, points):
         # Ensure the attribute exists before assigning points

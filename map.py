@@ -1,7 +1,9 @@
 import random
+from healthbar import HealthBar
 
 import pygame
 from assets import GAME_ASSETS
+from character import Character
 from enemy import Enemy
 
 
@@ -21,7 +23,7 @@ class Map:
             'Mage': pygame.image.load(GAME_ASSETS['mage']).convert_alpha(),
             'Rogue': pygame.image.load(GAME_ASSETS["rogue"]).convert_alpha()
         }
-        self.player_type = None
+        
         self.player_position = [self.window.get_width() / 2, self.window.get_height() / 2]
         self.enemies = [
             Enemy(GAME_ASSETS["goblin"], [50, 50], self.window),
@@ -34,16 +36,20 @@ class Map:
         self.blue_orb = None
         self.game_over = False
 
-    def load_player(self, character_type):
+        self.bar = HealthBar( 50, 30, 250, 120, 20)
+        self.bar.DrawBar(self.window)
+
+    def load_player(self, character_type, character):
         """
         Load the player character.
 
         Args:
             character_type (str): The type of character to load.
         """
-        self.player_type = character_type
+        self.character = character
         self.player_image = self.player_images[character_type]
         self.player_image = pygame.transform.scale(self.player_image, (int(self.player_image.get_width() * 0.15), int(self.player_image.get_height() * 0.15)))
+
 
     def check_for_combat(self):
         """
@@ -79,6 +85,7 @@ class Map:
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 # Assume player has a method to take damage
                 # self.player.take_damage(enemy_damage)
+                self.bar.UpdateHealth(enemy_damage)
 
     def spawn_blue_orb(self):
         """
@@ -141,4 +148,7 @@ class Map:
             enemy.draw()
         if self.blue_orb:
             self.window.blit(self.blue_orb, self.orb_position)
+
+        self.bar.DrawBar(self.window)
+
         pygame.display.flip()

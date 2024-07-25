@@ -1,8 +1,11 @@
 import pygame
+from mage import Mage
 from menu import MainMenu
 from character_select import CharacterSelect
 from map import Map
 from assets import load_assets, GAME_ASSETS
+from rogue import Rogue
+from warrior import Warrior
 
 class Game:
     def __init__(self):
@@ -33,8 +36,21 @@ class Game:
                     self.state = 'menu'  # Change the state to 'menu'
                 elif selected_character:  # If a character is selected
                     self.current_character = selected_character  # Set the current character to the selected character
-                    self.game_map.load_player(selected_character)  # Load the selected character into the game map
+
+                    if selected_character == 'Mage':
+                        character = Mage("Name")   
+                    elif selected_character == 'Rogue':
+                        character = Rogue("Name")   
+                    elif selected_character == 'Warrior':
+                        character = Warrior("Name", 250)  
+
+                    self.game_map.load_player(selected_character, character)  # Load the selected character into the game map
                     self.state = 'game_map'  # Change the state to 'game_map'
+
+                
+           
+
+
 
             elif self.state == 'game_map':  # If the state is 'game_map'
                 result = self.game_map.handle_events()  # Handle events in the game map and get the result
